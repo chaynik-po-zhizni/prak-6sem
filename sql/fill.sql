@@ -54,24 +54,6 @@ INSERT INTO Orders(client_id, "date", status, car_id, test_drive) VALUES
 	(1, '24.02.2024 09:00:04+03', 'issued', 5, TRUE),
 	(4, '20.02.2024 02:20:07+0', 'issued', 4, DEFAULT);
 
-CREATE FUNCTION update_client_orders() 
-RETURNS integer AS
-$update_client_orders$
-DECLARE
-	curs CURSOR FOR SELECT * FROM Clients;
-	res integer = 0;
-BEGIN
-	FOR cur in curs LOOP
-		UPDATE Clients SET client_orders = (SELECT array_agg(order_id)
-			 FROM Orders WHERE client_id = cur.client_id) WHERE client_id = cur.client_id;
-		res = res + 1;
-    END LOOP;
-    RETURN res;
-END;
-$update_client_orders$
-LANGUAGE plpgsql;
-
-SELECT update_client_orders();
 
 /*
 SELECT * FROM Orders JOIN Cars USING(car_id) JOIN Models USING(model_id) JOIN Brands USING(brand_id) JOIN Clients USING(client_id);
