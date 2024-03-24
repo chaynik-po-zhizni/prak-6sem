@@ -1,0 +1,170 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > OrderDAOImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">ru.msu.cmc.prak.DAO.impl</a>
+</div>
+
+<h1>Coverage Summary for Class: OrderDAOImpl (ru.msu.cmc.prak.DAO.impl)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">OrderDAOImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (25/25)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">OrderDAOImpl$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (25/25)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package ru.msu.cmc.prak.DAO.impl;
+&nbsp;
+&nbsp;import org.hibernate.Session;
+&nbsp;import org.hibernate.query.Query;
+&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;import ru.msu.cmc.prak.DAO.OrderDAO;
+&nbsp;import ru.msu.cmc.prak.entities.Client;
+&nbsp;import ru.msu.cmc.prak.entities.Order;
+&nbsp;
+&nbsp;import java.sql.Timestamp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Repository
+&nbsp;public class OrderDAOImpl extends CommonDAOImpl&lt;Order&gt; implements OrderDAO {
+&nbsp;
+&nbsp;    public OrderDAOImpl() {
+<b class="fc">&nbsp;        super(Order.class);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;Order&gt; getByFilter(Filter filter) {
+<b class="fc">&nbsp;        try (Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            initializeQueryString(&quot;from Order as o join o.client as c&quot;);</b>
+<b class="fc">&nbsp;            if (filter.getPhone() != null) {</b>
+<b class="fc">&nbsp;                setParameterToQueryString(&quot;c.phone =: phone&quot;);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getIsNeedTestDrive() != null) {</b>
+<b class="fc">&nbsp;                String t = filter.getIsNeedTestDrive()? &quot;&quot;: &quot;not &quot;;</b>
+<b class="fc">&nbsp;                setParameterToQueryString(&quot;o.test_drive&quot;);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getStatus() != null) {</b>
+<b class="fc">&nbsp;                setParameterToQueryString(&quot;o.status = &quot; + &quot;&#39;&quot; + filter.getStatus() + &quot;&#39;&quot;);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getDateTo() != null) {</b>
+<b class="fc">&nbsp;                setParameterToQueryString(&quot;o.date &lt;=: dateTo&quot;);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getDateFrom() != null) {</b>
+<b class="fc">&nbsp;                setParameterToQueryString(&quot;o.date &gt;=: dateFrom&quot;);</b>
+&nbsp;            }
+&nbsp;            //System.out.println(getQueryString());
+<b class="fc">&nbsp;            Query&lt;Order&gt; query = session.createQuery(getQueryString(), Order.class);</b>
+<b class="fc">&nbsp;            if (filter.getPhone() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;phone&quot;, filter.getPhone());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getDateTo() != null) {</b>
+<b class="fc">&nbsp;                Timestamp t = new Timestamp(filter.getDateTo().getTime());</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;dateTo&quot;, t);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getDateFrom() != null) {</b>
+<b class="fc">&nbsp;                Timestamp t = new Timestamp(filter.getDateFrom().getTime());</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;dateFrom&quot;, t);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            return query.getResultList();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-24 20:27</div>
+</div>
+</body>
+</html>

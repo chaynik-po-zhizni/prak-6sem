@@ -1,0 +1,213 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CommonDAOImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">ru.msu.cmc.prak.DAO.impl</a>
+</div>
+
+<h1>Coverage Summary for Class: CommonDAOImpl (ru.msu.cmc.prak.DAO.impl)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CommonDAOImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (44/44)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package ru.msu.cmc.prak.DAO.impl;
+&nbsp;
+&nbsp;import jakarta.persistence.criteria.CriteriaQuery;
+&nbsp;import org.hibernate.Session;
+&nbsp;import org.hibernate.SessionFactory;
+&nbsp;import org.hibernate.Transaction;
+&nbsp;import org.hibernate.query.Query;
+&nbsp;import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import ru.msu.cmc.prak.DAO.CommonDAO;
+&nbsp;import ru.msu.cmc.prak.entities.CommonEntity;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;@Repository
+&nbsp;public abstract class CommonDAOImpl &lt;E extends CommonEntity&gt; implements CommonDAO &lt;E&gt;{
+&nbsp;
+&nbsp;    protected SessionFactory sessionFactory;
+&nbsp;
+&nbsp;    protected Class &lt;E&gt; entityClass;
+&nbsp;
+<b class="fc">&nbsp;    public CommonDAOImpl(Class &lt;E&gt; entityClass) {</b>
+<b class="fc">&nbsp;        this.entityClass = entityClass;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setSessionFactory(LocalSessionFactoryBean sessionFactory) {
+<b class="fc">&nbsp;        this.sessionFactory = sessionFactory.getObject();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;E&gt; getAll() {
+<b class="fc">&nbsp;        try(Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            CriteriaQuery&lt;E&gt; criteriaQuery = session.getCriteriaBuilder().createQuery(entityClass);</b>
+<b class="fc">&nbsp;            criteriaQuery.from(entityClass);</b>
+<b class="fc">&nbsp;            Query&lt;E&gt; query = session.createQuery(criteriaQuery);</b>
+<b class="fc">&nbsp;            return query.getResultList();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public E getEntityById(int id) {
+<b class="fc">&nbsp;        try (Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            return session.get(entityClass, id);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public E update(E entity) {
+<b class="fc">&nbsp;        if (entity == null) {</b>
+<b class="fc">&nbsp;            return null;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (this.getEntityById(entity.getId()) != null) {</b>
+<b class="fc">&nbsp;            try (Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;                Transaction transaction = session.beginTransaction();</b>
+<b class="fc">&nbsp;                E res = session.merge(entity);</b>
+<b class="fc">&nbsp;                transaction.commit();</b>
+<b class="fc">&nbsp;                return res;</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void delete(int id) {
+<b class="fc">&nbsp;        E entity = this.getEntityById(id);</b>
+<b class="fc">&nbsp;        this.delete(entity);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void delete(E entity) {
+<b class="fc">&nbsp;        if (entity == null)</b>
+&nbsp;            return;
+<b class="fc">&nbsp;        try(Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            Transaction transaction = session.beginTransaction();</b>
+<b class="fc">&nbsp;            session.remove(entity);</b>
+<b class="fc">&nbsp;            transaction.commit();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void save(E entity) {
+<b class="fc">&nbsp;        if (entity == null)</b>
+&nbsp;            return;
+<b class="fc">&nbsp;        try(Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            if (null != entity.getId()) {</b>
+<b class="fc">&nbsp;                entity.setId(null);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            Transaction transaction = session.beginTransaction();</b>
+<b class="fc">&nbsp;            session.persist(entity);</b>
+<b class="fc">&nbsp;            transaction.commit();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean isWritten;
+&nbsp;    private String queryString;
+&nbsp;    protected void initializeQueryString(String initString) {
+<b class="fc">&nbsp;        queryString = initString + &quot; &quot;;</b>
+<b class="fc">&nbsp;        isWritten = false;</b>
+&nbsp;    }
+&nbsp;    protected void setParameterToQueryString(String parameterToQueryString) {
+<b class="fc">&nbsp;        queryString += isWritten ? &quot;and &quot; : &quot;where &quot;;</b>
+<b class="fc">&nbsp;        queryString += parameterToQueryString + &quot; &quot;;</b>
+<b class="fc">&nbsp;        isWritten = true;</b>
+&nbsp;    }
+&nbsp;    protected String getQueryString() {
+<b class="fc">&nbsp;        return queryString;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-24 20:27</div>
+</div>
+</body>
+</html>

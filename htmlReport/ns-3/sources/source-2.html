@@ -1,0 +1,279 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CarDAOImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">ru.msu.cmc.prak.DAO.impl</a>
+</div>
+
+<h1>Coverage Summary for Class: CarDAOImpl (ru.msu.cmc.prak.DAO.impl)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CarDAOImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (95/95)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CarDAOImpl$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (95/95)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package ru.msu.cmc.prak.DAO.impl;
+&nbsp;
+&nbsp;import org.hibernate.Session;
+&nbsp;import org.hibernate.Transaction;
+&nbsp;import org.hibernate.query.NativeQuery;
+&nbsp;import org.hibernate.query.Query;
+&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;import ru.msu.cmc.prak.DAO.CarDAO;
+&nbsp;import ru.msu.cmc.prak.entities.Car;
+&nbsp;import ru.msu.cmc.prak.entities.Configuration;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Repository
+&nbsp;public class CarDAOImpl  extends CommonDAOImpl&lt;Car&gt; implements CarDAO {
+&nbsp;    public CarDAOImpl() {
+<b class="fc">&nbsp;        super(Car.class);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;Car&gt; getByFilter(Filter filter) {
+<b class="fc">&nbsp;        try(Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            initializeQueryString(&quot;from Car as c join c.model as m join m.brand as b &quot;);</b>
+<b class="fc">&nbsp;            configureQueryStringMain(filter);</b>
+<b class="fc">&nbsp;            configureQueryStringOptional(filter);</b>
+&nbsp;            //System.out.println(getQueryString());
+<b class="fc">&nbsp;            Query&lt;Car&gt; query = session.createQuery(getQueryString(), Car.class);</b>
+<b class="fc">&nbsp;            if (filter.getBrand() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;brandName&quot;, filter.getBrand());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getModel() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;modelName&quot;, filter.getModel());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getPriceFrom() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;priceFrom&quot;, filter.getPriceFrom());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getPriceTo() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;priceTo&quot;, filter.getPriceTo());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getMileageFrom() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;mileageFrom&quot;, filter.getMileageFrom());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getMileageTo() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;mileageTo&quot;, filter.getMileageTo());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getColor() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;color&quot;, filter.getColor());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getNumSeats() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;seats&quot;, filter.getNumSeats());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getCarBody() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;body&quot;, filter.getCarBody());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getEnginePowerFrom() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;enginePowerFrom&quot;, filter.getEnginePowerFrom());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getEnginePowerTo() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;enginePowerTo&quot;, filter.getEnginePowerTo());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getCountry() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;country&quot;, filter.getCountry());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getYearFrom() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;yearFrom&quot;, filter.getYearFrom());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (filter.getYearTo() != null) {</b>
+<b class="fc">&nbsp;                query.setParameter(&quot;yearTo&quot;, filter.getYearTo());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            return query.getResultList();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;String&gt; getValuesFiled(String field) {
+<b class="fc">&nbsp;        if (field == null) {</b>
+<b class="fc">&nbsp;            return null;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!field.equals(&quot;num_seats&quot;)</b>
+<b class="fc">&nbsp;                &amp;&amp; !field.equals(&quot;car_body&quot;)</b>
+<b class="fc">&nbsp;                &amp;&amp; !field.equals(&quot;assembly_country&quot;)</b>
+<b class="fc">&nbsp;                &amp;&amp; !field.equals(&quot;color&quot;)) {</b>
+<b class="fc">&nbsp;            return null;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        try(Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            String queryString = &quot;select distinct c.configuration.&quot; + field + &quot; from Car as c &quot;;</b>
+<b class="fc">&nbsp;            initializeQueryString(queryString);</b>
+<b class="fc">&nbsp;            Query&lt;String&gt; query = session.createQuery(getQueryString(), String.class);</b>
+<b class="fc">&nbsp;            return query.getResultList();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Integer getMinYearValue() {
+<b class="fc">&nbsp;        try(Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            String queryString = &quot;select distinct min(c.configuration.year) from Car as c &quot;;</b>
+<b class="fc">&nbsp;            initializeQueryString(queryString);</b>
+<b class="fc">&nbsp;            Query&lt;Integer&gt; query = session.createQuery(getQueryString(), Integer.class);</b>
+<b class="fc">&nbsp;            return query.uniqueResult();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void configureQueryStringMain(Filter filter) {
+<b class="fc">&nbsp;        if (filter.getBrand() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;b.name =: brandName&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getModel() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;m.name =: modelName&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getDriveType() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.drive = &quot; + &quot;&#39;&quot; + filter.getDriveType() + &quot;&#39;&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getTransmissionType() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.transmission = &quot; + &quot;&#39;&quot; + filter.getTransmissionType() + &quot;&#39;&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getFuelType() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.fuel = &quot; + &quot;&#39;&quot; + filter.getFuelType() + &quot;&#39;&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getPriceFrom() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.price &gt;= :priceFrom&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getPriceTo() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.price &lt;= :priceTo&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getMileageFrom() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.mileage is not null&quot;);</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.mileage &gt;= :mileageFrom&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getMileageTo() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.mileage &lt;= :mileageTo&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getIsLeftSteeringWheel() != null) {</b>
+<b class="fc">&nbsp;            String t = filter.getIsLeftSteeringWheel()? &quot;&quot;: &quot;not &quot;;</b>
+<b class="fc">&nbsp;            setParameterToQueryString(t + &quot;c.left_steering_wheel&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    private void configureQueryStringOptional(Filter filter) {
+<b class="fc">&nbsp;        if (filter.getColor() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.configuration.color = :color&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getNumSeats() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.configuration.num_seats =: seats&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getCarBody() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.configuration.car_body =: body&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getEnginePowerFrom() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.configuration.engine_power is not null&quot;);</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.configuration.engine_power &gt;= : enginePowerFrom&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getEnginePowerTo() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.configuration.engine_power &lt;= : enginePowerTo&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getCountry() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.configuration.assembly_country = : country&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getYearFrom() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.configuration.year is not null&quot;);</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.configuration.year &gt;= : yearFrom&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (filter.getYearTo() != null) {</b>
+<b class="fc">&nbsp;            setParameterToQueryString(&quot;c.configuration.year &lt;= : yearTo&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-24 20:27</div>
+</div>
+</body>
+</html>

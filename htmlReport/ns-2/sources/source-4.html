@@ -1,0 +1,82 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CommonDAO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">ru.msu.cmc.prak.DAO</a>
+</div>
+
+<h1>Coverage Summary for Class: CommonDAO (ru.msu.cmc.prak.DAO)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">CommonDAO</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package ru.msu.cmc.prak.DAO;
+&nbsp;
+&nbsp;import ru.msu.cmc.prak.entities.CommonEntity;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public interface CommonDAO &lt;E extends CommonEntity&gt; {
+&nbsp;    public  List&lt;E&gt; getAll();
+&nbsp;    public  E getEntityById(int id);
+&nbsp;    public  E update(E entity);
+&nbsp;    public  void delete(int id);
+&nbsp;    public  void delete(E entity);
+&nbsp;    public  void save(E entity);
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-24 20:27</div>
+</div>
+</body>
+</html>
