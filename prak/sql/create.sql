@@ -1,6 +1,3 @@
-DROP TABLE IF EXISTS Cars, Brands, Models, Orders, Clients;
-DROP TYPE IF EXISTS drive_type, status_type, transmission_type, fuel_type;
-
 SET DateStyle TO 'German', 'DMY';
 
 CREATE TYPE drive_type AS ENUM ('front', 'rear', 'four');
@@ -11,13 +8,15 @@ CREATE TYPE fuel_type AS ENUM ('gas','diesel', 'electricity', 'gasoline');
 
 CREATE TABLE Brands (
 	brand_id serial PRIMARY KEY,
-	name varchar(255) NOT NULL
+	name varchar(255) NOT NULL,
+    UNIQUE (name)
 );
 
 CREATE TABLE Models (
 	model_id serial PRIMARY KEY,
 	brand_id integer REFERENCES Brands (brand_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	name varchar(255) NOT NULL
+	name varchar(255) NOT NULL,
+    UNIQUE (brand_id, name)
 );
 
 CREATE TABLE Cars (
@@ -29,7 +28,8 @@ CREATE TABLE Cars (
 	price integer NOT NULL,
 	transmission transmission_type NOT NULL DEFAULT 'MT',
 	drive drive_type NOT NULL DEFAULT 'front',
-	fuel fuel_type NOT NULL DEFAULT 'gasoline'
+	fuel fuel_type NOT NULL DEFAULT 'gasoline',
+    features jsonb
 );
 
 CREATE TABLE Clients (

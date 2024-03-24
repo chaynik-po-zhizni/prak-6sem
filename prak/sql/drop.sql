@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS Cars cascade;
+DROP TABLE IF EXISTS Brands cascade;
+DROP TABLE IF EXISTS Models cascade;
+DROP TABLE IF EXISTS Orders cascade;
+DROP TABLE IF EXISTS Clients cascade;
+DROP TYPE IF EXISTS drive_type cascade;
+DROP TYPE IF EXISTS status_type cascade;
+DROP TYPE IF EXISTS transmission_type cascade;
+DROP TYPE IF EXISTS fuel_type cascade;
