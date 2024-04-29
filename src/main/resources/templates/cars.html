@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
+  <link rel="stylesheet" type="text/css" href="/styles/scss/bootstrap.scss">
+  <title>Клиенты</title>
+</head>
+<body>
+<div class="container-fluid" style="width: 50%;">
+  <div class="row tableRow tableHeaderRow"> <!-- Заголовок -->
+    <div class="col-sm-1 tableVerticalLineRight">
+      <a href="../index">Главная страница</a>
+    </div>
+    <div class="col-sm tableVerticalLineRight">
+      <a href="../cars">Автомобили</a>
+    </div>
+    <div class="col-sm tableVerticalLineRight">
+      <a href="../orders">Заказы</a>
+    </div>
+    <div class="col-sm-1 tableVerticalLineRight">
+      <a href="../clients">Клиенты</a>
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-1"></div>
+  </div>
+</div>
+<div class="col-sm tableButtonBlock" style="text-align: right;">
+  <a href="../newCar">
+    <button class="internalButton" id="addCar">Добавить новый автомобиль</button>
+  </a>
+</div>
+<div class="container-fluid" style="width: 75%;">
+  <div class="row">
+    <div class="col-sm" style="text-align: left;">
+      <p></p>
+    </div>
+    <div class="col-sm" style="text-align: left;">
+    </div>
+  </div>
+</div>
+<div class="container-fluid" style="width: 100%;">
+  <div class="row tableRow tableHeaderRow">
+    <div class="col-sm tableVerticalLineRight">
+      <p class="tableText">Марка</p>
+    </div>
+    <div class="col-sm tableVerticalLineRight">
+      <p class="tableText">Модель</p>
+    </div>
+    <div class="col-sm-1 tableVerticalLineRight">
+      <p class="tableText">Год выпуска</p>
+    </div>
+    <div class="col-sm tableVerticalLineRight">
+      <p class="tableText">Пробег</p>
+    </div>
+    <div class="col-sm tableVerticalLineRight">
+      <p class="tableText">Цена</p>
+    </div>
+    <div class="col-sm tableVerticalLineRight">
+      <p class="tableText">Тип топлива</p>
+    </div>
+    <div class="col-sm tableVerticalLineRight">
+      <p class="tableText">Коробка передач</p>
+    </div>
+    <div class="col-sm tableVerticalLineRight">
+      <p class="tableText">Тип привода</p>
+    </div>
+    <div class="col-sm tableVerticalLineRight">
+      <p class="tableText">Левый руль</p>
+    </div>
+    <div class="col-sm tableVerticalLineRight">
+      <p class="tableText">Мощность двигателя л.с</p>
+    </div>
+    <div class="col-sm tableVerticalLineRight">
+      <p class="tableText">Объем двигателя м3</p>
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-1"></div>
+  </div>
+  <div th:each="car : ${carList}">
+    <div class="row tableRow" id="contentRow">
+      <div class="col-sm tableVerticalLineRight">
+        <p th:if="${car.model==null}" class="tableText">-</p>
+        <p th:text="${car.model.brand.name}" class="tableText" id="brandShow"></p>
+      </div>
+      <div class="col-sm tableVerticalLineRight">
+        <p th:if="${car.model==null}" class="tableText">-</p>
+        <p th:text="${car.model.name}" class="tableText" id="modelShow"></p>
+      </div>
+      <div class="col-sm-1 tableVerticalLineRight">
+        <p th:if="${car.configuration==null}" class="tableText">-</p>
+        <p th:text="${car.configuration.year}" class="tableText" id="yearShow"></p>
+      </div>
+      <div class="col-sm tableVerticalLineRight">
+        <p th:text="${car.mileage}" class="tableText" id="mileageShow"></p>
+      </div>
+      <div class="col-sm tableVerticalLineRight">
+        <p th:text="${car.price}" class="tableText" id="priceShow"></p>
+      </div>
+      <div class="col-sm tableVerticalLineRight">
+        <p th:text="${car.fuel}" class="tableText" id="fuelShow"></p>
+      </div>
+      <div class="col-sm tableVerticalLineRight">
+        <p th:text="${car.transmission}" class="tableText" id="transmissionShow"></p>
+      </div>
+      <div class="col-sm tableVerticalLineRight">
+        <p th:text="${car.drive}" class="tableText" id="driveShow"></p>
+      </div>
+      <div class="col-sm tableVerticalLineRight">
+        <p th:text="${car.left_steering_wheel}" class="tableText" id="leftShow"></p>
+      </div>
+      <div class="col-sm tableVerticalLineRight">
+        <p th:if="${car.configuration==null}" class="tableText">-</p>
+        <p th:text="${car.configuration.engine_power}" class="tableText" id="powerShow"></p>
+      </div>
+      <div class="col-sm tableVerticalLineRight">
+        <p th:if="${car.configuration==null}" class="tableText">-</p>
+        <p th:text="${car.configuration.engine_capacity}" class="tableText" id="capacityShow"></p>
+      </div>
+      <div class="col-sm-1 tableButtonBlock tableVerticalLineRight">
+        <form method="get" action="/car" class="inlineForm">
+          <input type="hidden" name="id" th:value="${car.id}">
+          <button class="internalButton" id="infoButton">Информация</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

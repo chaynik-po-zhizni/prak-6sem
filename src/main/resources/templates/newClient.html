@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
+    <title>Новый клиент</title>
+</head>
+<body>
+<div class="container-fluid" style="width: 50%;">
+    <div class="row tableRow tableHeaderRow"> <!-- Заголовок -->
+        <div class="col-sm-1 tableVerticalLineRight">
+            <a href="../index">Главная страница</a>
+        </div>
+        <div class="col-sm tableVerticalLineRight">
+            <a href="../cars">Автомобили</a>
+        </div>
+        <div class="col-sm tableVerticalLineRight">
+            <a href="../orders">Заказы</a>
+        </div>
+        <div class="col-sm-1 tableVerticalLineRight">
+            <a href="../clients">Клиенты</a>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-1"></div>
+    </div>
+</div>
+
+
+<form method="post" action="/clients/add" class="form-container">
+        <input type="text" placeholder="ФИО" name="name" required>
+        <input type="text" placeholder="Почта" name="email">
+        <input type="text" placeholder="Адрес" name="address">
+        <input type="text" placeholder="Телефон" name="phone" required>
+        <button type="submit" class="btn">Сохранить</button>
+</form>
+</body>
+</html>

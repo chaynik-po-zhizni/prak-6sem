@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
+  <link rel="stylesheet" type="text/css" href="/styles/scss/bootstrap.scss">
+  <title>Модели</title>
+</head>
+<body>
+<script>
+  function openForm() {
+    document.getElementById("myForm").style.display = "block";
+  }
+
+  function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+  }
+</script>
+<div class="container-fluid" style="width: 50%;">
+  <div class="row tableRow tableHeaderRow"> <!-- Заголовок -->
+    <div class="col-sm-1 tableVerticalLineRight">
+      <a href="../../index">Главная страница</a>
+    </div>
+    <div class="col-sm tableVerticalLineRight">
+      <a href="../../cars">Автомобили</a>
+    </div>
+    <div class="col-sm tableVerticalLineRight">
+      <a href="../../orders">Заказы</a>
+    </div>
+    <div class="col-sm-1 tableVerticalLineRight">
+      <a href="../../clients">Клиенты</a>
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-1"></div>
+  </div>
+</div>
+<p>Модели бренда:</p>
+<p th:text="${brand}"></p>
+<div class="container-fluid" style="width: 75%;">
+  <div class="row">
+    <div class="col-sm" style="text-align: left;">
+      <p></p>
+    </div>
+    <div class="col-sm" style="text-align: left;">
+      <form method="get" action="/models">
+        <input type="hidden" name="brandName" th:value="${brand}">
+        <input name="name" type="text">
+        <button type="submit" id="findModels">Поиск</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" style="width: 75%;">
+  <div class="row">
+    <div class="col-sm" style="text-align: left;">
+      <p>Введите название новой модели:</p>
+      <p></p>
+    </div>
+    <div class="col-sm" style="text-align: left;">
+      <form method="post" action="/models/add">
+        <input type="hidden" name="brandName" th:value="${brand}">
+        <input name="name" type="text">
+        <button type="submit" id="addNewBrand">Добавить</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid" style="width: 75%;">
+  <div class="row">
+    <div class="col-sm" style="text-align: left;">
+      <p>Измените название модели:</p>
+    </div>
+    <div class="col-sm" style="text-align: left;">
+      <button class="open-button" onclick="openForm()">Изменить</button>
+      <div class="form-popup" id="myForm">
+        <form method="post" action="/models/edit" class="form-container">
+          <input type="hidden" name="brandName" th:value="${brand}">
+          <input type="text" placeholder="Старое название" name="oldName" required>
+          <input type="text" placeholder="Новое название" name="newName" required>
+          <button type="submit" class="btn">Сохранить</button>
+          <button type="button" class="btn cancel" onclick="closeForm()">Закрыть</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" style="width: 50%;">
+  <div th:each="model : ${modelList}">
+    <div class="row tableRow">
+      <div class="col-sm">
+        <p th:text="${model.name}" class="tableText"></p>
+      </div>
+      <div class="col-sm tableButtonBlock" style="text-align: right;">
+        <form method="post" action="/models/delete" class="inlineForm">
+          <input type="hidden" name="id" th:value="${model.id}">
+          <button type="submit" class="internalButton deleteButton">Удалить из базы</button>
+        </form>
+      </div>
+      <div class="col-sm tableButtonBlock" style="text-align: right;">
+        <a th:href="@{/models/car/{id}(id=${model.id})}">
+          <button class="internalButton" id="infoButton">Автомобили</button>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row tableRow"></div>
+</div>
+</body>
+</html>
