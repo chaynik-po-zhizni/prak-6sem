@@ -8,8 +8,15 @@ import java.io.Serializable;
 
 
 public enum Status_Type implements Serializable {
-    issued,
-    in_progress,
-    done,
-    canceled
+    issued ("Создан"),
+    in_progress ("В процессе"),
+    done ("Готов"),
+    canceled ("Отменен");
+    private String readable;
+    Status_Type(String code){
+        this.readable = code;
+    }
+    public String getReadName() {
+        return this.readable;
+    }
 }

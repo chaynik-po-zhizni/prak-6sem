@@ -19,6 +19,7 @@ import java.util.List;
 
 import static java.util.Date.UTC;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -78,5 +79,14 @@ public class OrderDAOTest {
         filter = new OrderDAO.Filter(null, 0L, null, null, null);
         orderList = orderDAO.getByFilter(filter);
         assertEquals(0, orderList.size());
+    }
+
+    @Test
+    void testCarOrdered() {
+        Order order = orderDAO.carOrdered(3);
+        assertNull(order);
+        order = orderDAO.carOrdered(10);
+        System.out.println(order.getId());
+        assertEquals(order.getCar().getId(), 10);
     }
 }

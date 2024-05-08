@@ -1,10 +1,177 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
+
+    <link rel="stylesheet" type="text/css" href="/styles/dist/css/bootstrap.min.css">
+    <title>Новый автомобиль</title>
 </head>
 <body>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="/index">Главная страница</a> <!-- активная ссылка -->
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/brands">Бренды</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/clients">Клиенты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/cars">Автомобили</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/orders">Заказы</a>
+    </li>
+</ul>
 
+<div class="row">
+    <div class="col" style="width: 100%; text-align: right; margin-right:20px;">
+        <h3><a href="/index">Автосалон</a></h3>
+        <p><img src="/styles/1639223273_56-papik-pro-p-mashinka-klipart-57.png" width="50" alt="">Сайт автосалона </p>
+    </div>
+</div>
+<h1 align="center">Новый автомобиль</h1>
+<p></p>
+
+<form method="post" action="/cars/add" class="container-fluid">
+    <p> Выберите тип привода </p><p>
+        <select class="form-select" name="drive" id="drive-select">
+            <option value="front" selected>Передний</option>
+            <option value="rear">Задний</option>
+            <option value="front">Полный</option>
+        </select>
+    </p>
+    <p> Выберите тип топлива</p>
+    <p>
+        <select class="form-select" name="fuel" id="fuel-select">
+            <option value="gas">Газ</option>
+            <option value="diesel">Дизель</option>
+            <option value="gasoline" selected>Бензин</option>
+            <option value="electricity">Электричество</option>
+        </select>
+    </p>
+    <p>Выберите тип коробки передач</p>
+    <p>
+            <select class="form-select" name="transmission" id="transmission-select">
+            <option value="MT" selected>Механика</option>
+            <option value="AT">Автомат</option>
+            <option value="CVT">Вариатор</option>
+            <option value="Robot">Робот</option>
+        </select>
+    </p>
+    <p> Выберите сторону руля </p>
+    <p>
+            <select class="form-select" name="left" id="left-select">
+            <option value="true">Левый</option>
+            <option value="false" selected>Правый</option>
+        </select>
+    </p>
+    <p>Выберите бренд</p>
+    <p>
+            <select class="form-select" name="brandName" id="brandtoselect">
+            <option value="" selected>-- Выберите бренд --</option>
+            <div th:each="brand : ${brandList}">
+               <option th:value="${brand.name}"><p th:text="${brand.name}" class="tableText" id="brandNameShow"></p></option>
+            </div>
+        </select>
+    </p>
+    <p>Выберите модель</p>
+    <p>
+            <select class="form-select" name="modelName" id="modeltoselect">
+            <option value="" selected>-- Выберите модель --</option>
+            <div th:each="model : ${modelList}">
+                <option th:value="${model.name}" th:class="${model.brand.name}"><p th:text="${model.name}" class="tableText" id="modelNameShow"></p></option>
+            </div>
+        </select>
+    </p>
+    <p>
+        Введите пробег (цифрами в километрах)
+    </p>
+    <p>
+        <input type="text" class="resized" name="mileage" placeholder="Пробег">
+    </p>
+    <p>
+        Введите цену (цифрами в рублях)
+    </p>
+    <p>
+        <input type="text" class="resized" name="price" placeholder="Цена" required>
+    </p>
+    <p>
+        Введите мощность двигателя (цифрами в л.с)
+    </p>
+    <p>
+        <input type="text" class="resized" name="power" placeholder="Мощность двигателя">
+    </p>
+    <p>
+        Введите объем двигателя (цифрами в см3)
+    </p>
+    <p>
+        <input type="text" class="resized" name="capacity" placeholder="Объем двигателя">
+    </p>
+    <p>
+        Введите год выпуска
+    </p>
+    <p>
+        <input type="number" class="resized" placeholder="Год выпуска" min="1888" max="2024" th:attr="max=${maxYear}" step="1"  name="year" />
+    </p>
+    <p>
+        Введите количество мест (цифрами)
+    </p>
+    <p>
+        <input type="text" class="resized" name="numSeats" placeholder="Количество мест">
+    </p>
+    <p>
+        Введите количество дверей (цифрами)
+    </p>
+    <p>
+        <input type="text" class="resized" name="numDoors" placeholder="Количество дверей">
+    </p>
+    <p>
+        Введите тип кузова с маленькой буквы
+    </p>
+    <p>
+        <input type="text" class="resized" name="carBody" placeholder="Тип кузова">
+    </p>
+    <p>
+        Введите страну сборки с большой буквы
+    </p>
+    <p>
+        <input type="text" class="resized" name="country" placeholder="Страна сборки">
+    </p>
+    <p>
+        Введите цвет кузова с маленькой буквы
+    </p>
+    <p>
+        <input type="text" class="resized" name="color" placeholder="Цвет кузова">
+    </p>
+    <p>
+        Введите объем багажника (цифрами число в см3)
+    </p>
+    <p>
+        <input type="text" class="resized" name="volume" placeholder="Объем багажника">
+    </p>
+    <p>
+        Введите особенности автомобиля через ;
+    </p>
+    <p>
+        <input type="text" class="resized" name="inform" placeholder="Особенности">
+    </p>
+    <button type="submit" class="btn btn-success">Сохранить</button>
+</form>
+<script src="/styles/jquery-3.3.1.min.js"></script>
+<script src="/styles/dist/js/bootstrap.min.js"></script>
+<script src="/styles/bootstrap-select-1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="/styles/jquery.chained.min.js"></script>
+<script>
+    $(function(){
+        $("#modeltoselect").chained("#brandtoselect");
+
+        $("#brandtoselect").change(function(){
+
+        });
+    });
+</script>
 </body>
 </html>

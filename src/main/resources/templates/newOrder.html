@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
+
+    <link rel="stylesheet" type="text/css" href="/styles/dist/css/bootstrap.min.css">
+    <title>Новый заказ</title>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="/index">Главная страница</a> <!-- активная ссылка -->
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/brands">Бренды</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/clients">Клиенты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/cars">Автомобили</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/orders">Заказы</a>
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col" style="width: 100%; text-align: right; margin-right:20px;">
+        <h3><a href="/index">Автосалон</a></h3>
+        <p><img src="/styles/1639223273_56-papik-pro-p-mashinka-klipart-57.png" width="50" alt="">Сайт автосалона </p>
+    </div>
+</div>
+<h1 align="center"> Новый заказ</h1>
+<p></p>
+
+<form method="post" action="/orders/add" class="form-container">
+    <input type="hidden" name="carId" th:value="${carId}">
+    <p>
+        Введите телефон (Только цифры без других символов и без кода страны т.е без +7/8)
+    </p>
+    <p>
+        <input type="tel" class="resized" pattern="[0-9]{10}" placeholder="Телефон клиента" name="phone" required>
+    </p>
+    <p>Выберите статус заказа</p>
+    <p>
+        <select class="form-select" name="status" id="status-select">
+            <option value="issued" selected>Создан</option>
+            <option value="in_progress">В процессе</option>
+            <option value="done">Готов</option>
+            <option value="canceled">Отменен</option>
+        </select>
+    </p>
+    <p>Выберите нужен ли тест драйв</p>
+    <p>
+        <select class="form-select" name="test_drive" id="test_drive-select">
+            <option value="true">Да</option>
+            <option value="false" selected>Нет</option>
+        </select>
+    </p>
+    <button type="submit" class="btn btn-success">Сохранить</button>
+</form>
+</body>
+</html>

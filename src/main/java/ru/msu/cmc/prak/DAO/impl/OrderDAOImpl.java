@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.msu.cmc.prak.DAO.OrderDAO;
+import ru.msu.cmc.prak.entities.Car;
 import ru.msu.cmc.prak.entities.Client;
 import ru.msu.cmc.prak.entities.Order;
 
@@ -51,6 +52,15 @@ public class OrderDAOImpl extends CommonDAOImpl<Order> implements OrderDAO {
                 query.setParameter("dateFrom", t);
             }
             return query.getResultList();
+        }
+    }
+    public Order carOrdered(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            initializeQueryString("from Order as o");
+            setParameterToQueryString("o.car.id =: car_id");
+            Query<Order> query = session.createQuery(getQueryString(), Order.class);
+            query.setParameter("car_id", id);
+            return query.uniqueResult();
         }
     }
 }

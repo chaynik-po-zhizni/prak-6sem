@@ -20,7 +20,7 @@ public class CarDAOImpl  extends CommonDAOImpl<Car> implements CarDAO {
     @Override
     public List<Car> getByFilter(Filter filter) {
         try(Session session = sessionFactory.openSession()) {
-            initializeQueryString("from Car as c join c.model as m join m.brand as b ");
+            initializeQueryString("from Car as c left outer join c.model as m left outer join m.brand as b ");
             configureQueryStringMain(filter);
             configureQueryStringOptional(filter);
             //System.out.println(getQueryString());

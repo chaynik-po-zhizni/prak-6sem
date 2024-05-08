@@ -27,10 +27,9 @@ public class ModelContoller {
     private SessionFactory sessionFactory;
 
     @GetMapping(value = "/models")
-    public String getBrands(@NonNull Model model,
+    public String getModels(@NonNull Model model,
                             @RequestParam String brandName,
                             @RequestParam(required = false) String name) {
-        System.out.println(modelDAO.getModelsByBrand(brandName).toString());
         if (name != null) {
             ru.msu.cmc.prak.entities.Model mod = modelDAO.getModelByName(brandName, name);
             if (mod == null) {
@@ -48,7 +47,7 @@ public class ModelContoller {
     }
 
     @PostMapping(value = "/models/add")
-    public String postBrandsAdd(@NonNull Model model,
+    public String postModelsAdd(@NonNull Model model,
                                 @RequestParam String brandName,
                                 @RequestParam String name) {
         Brand brand = brandDAO.getBrandByName(brandName);
@@ -67,7 +66,7 @@ public class ModelContoller {
     }
 
     @PostMapping(value = "/models/delete")
-    public String postBrandsDelete(@NonNull Model model, @RequestParam int id) {
+    public String postModelsDelete(@NonNull Model model, @RequestParam int id) {
         String brandName = modelDAO.getEntityById(id).getBrand().getName();
         modelDAO.delete(id);
         model.addAttribute("brand", brandName);
@@ -75,7 +74,7 @@ public class ModelContoller {
     }
 
     @PostMapping(value = "/models/edit")
-    public String postBrandsEdit(@NonNull Model model,
+    public String postModelsEdit(@NonNull Model model,
                                  @RequestParam String brandName,
                                  @RequestParam String oldName,
                                  @RequestParam String newName) {
@@ -84,11 +83,14 @@ public class ModelContoller {
         if (mod == null) {
             return "redirect:../models?brandName=" + brandName;
         }
+        ru.msu.cmc.prak.entities.Model mod1 = modelDAO.getModelByName(brandName, newName);
+        if (mod1 != null && !mod1.equals(mod)) {
+            return ChangeController.getError(model, 1, newName, oldName, brandName);
+        }
         if (newName != null)
             if (!newName.isEmpty()) {
                 mod.setName(newName);
             }
-
         modelDAO.update(mod);
         return "redirect:../models?brandName=" + brandName;
     }

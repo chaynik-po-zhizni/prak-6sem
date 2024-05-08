@@ -1,133 +1,278 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
-  <link rel="stylesheet" type="text/css" href="/styles/scss/bootstrap.scss">
-  <title>Клиенты</title>
+  <link rel="stylesheet" type="text/css" href="/styles/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/styles/bootstrap-select-1.13.14/dist/css/bootstrap-select.min.css">
+  <title>Автомобили</title>
 </head>
 <body>
-<div class="container-fluid" style="width: 50%;">
-  <div class="row tableRow tableHeaderRow"> <!-- Заголовок -->
-    <div class="col-sm-1 tableVerticalLineRight">
-      <a href="../index">Главная страница</a>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <a href="../cars">Автомобили</a>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <a href="../orders">Заказы</a>
-    </div>
-    <div class="col-sm-1 tableVerticalLineRight">
-      <a href="../clients">Клиенты</a>
-    </div>
-    <div class="col-sm-1"></div>
-    <div class="col-sm-1"></div>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="/index">Главная страница</a> <!-- активная ссылка -->
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/brands">Бренды</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/clients">Клиенты</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/cars">Автомобили</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/orders">Заказы</a>
+  </li>
+</ul>
+
+<div class="row">
+  <div class="col" style="width: 100%; text-align: right; margin-right:20px;">
+    <h3><a href="/index">Автосалон</a></h3>
+    <p><img src="/styles/1639223273_56-papik-pro-p-mashinka-klipart-57.png" width="50" alt="">Сайт автосалона </p>
   </div>
 </div>
-<div class="col-sm tableButtonBlock" style="text-align: right;">
+<h1 align="center"> Автомобили</h1>
+<p></p>
+
+<div class="col" style="text-align: right; width: 100%; margin-right:20px">
   <a href="../newCar">
-    <button class="internalButton" id="addCar">Добавить новый автомобиль</button>
+    <button class="btn btn-warning" id="addCar">Добавить новый автомобиль</button>
   </a>
 </div>
-<div class="container-fluid" style="width: 75%;">
+<p></p>
+<p></p>
+<p></p>
+<div class="container-fluid" style="width: 30%; text-align: left; margin-left:20px">
   <div class="row">
     <div class="col-sm" style="text-align: left;">
-      <p></p>
-    </div>
-    <div class="col-sm" style="text-align: left;">
+      <form method="get" action="/cars">
+        <fieldset class="form-elem">
+          <select class="form-select"  name="fuelType" id="fuel-select">
+            <option value="" selected disabled hidden>Топливо</option>
+            <option value="">-- Выберите тип топлива --</option>
+            <option value="gas">Газ</option>
+            <option value="diesel">Дизель</option>
+            <option value="gasoline">Бензин</option>
+            <option value="electricity">Электричество</option>
+          </select>
+        </fieldset>
+        <fieldset class="form-elem">
+          <select class="form-select"   name="isLeftSteeringWheel" id="left-select">
+            <option value="" selected disabled hidden>Руль</option>
+            <option value="">-- Выберите сторону руля --</option>
+            <option value="true">Левый</option>
+            <option value="false">Правый</option>
+          </select>
+        </fieldset>
+        <fieldset class="form-elem">
+         <select class="form-select" name="driveType" id="drive-select">
+            <option value="" selected disabled hidden>Привод</option>
+            <option value="">-- Выберите тип привода --</option>
+            <option value="front">Передний</option>
+            <option value="rear">Задний</option>
+            <option value="four">Полный</option>
+          </select>
+        </fieldset>
+        <fieldset class="form-elem">
+        <select class="form-select" name="transmissionType" id="transmission-select">
+          <option value="" selected disabled hidden>Коробка передач</option>
+          <option value="">-- Выберите тип коробки передач --</option>
+          <option value="MT">Механика</option>
+          <option value="AT">Автомат</option>
+          <option value="CVT">Вариатор</option>
+          <option value="Robot">Робот</option>
+        </select>
+        </fieldset>
+        <fieldset class="form-elem">
+        <select class="form-select" name="color" id="color-select">
+          <option value="" >-- Выберите цвет --</option>
+          <option value="" selected disabled hidden>Цвет</option>
+          <div th:each="color : ${colorList}">
+            <p th:if="${color!=null}" class="tableText">
+             <option>
+              <p th:text="${color}" class="tableText" id="colorShow"></p>
+             </option>
+            </p>
+          </div>
+        </select>
+        </fieldset>
+        <fieldset class="form-elem">
+        <select class="form-select" name="numSeats" id="seats-select">
+          <option value="" selected disabled hidden>Количество мест</option>
+          <option value="">-- Выберите количество мест --</option>
+          <div th:each="num : ${seatsList}">
+            <p th:if="${num!=null}" class="tableText"><option>
+              <p th:text="${num}" class="tableText" id="seatsShow"></p>
+            </option></p>
+          </div>
+        </select>
+        </fieldset>
+        <fieldset class="form-elem">
+        <select class="form-select" name="carBody" id="body-select">
+          <option value="" selected disabled hidden>Кузов</option>
+          <option value="">-- Выберите тип кузова --</option>
+          <div th:each="body : ${bodyList}">
+            <p th:if="${body!=null}" class="tableText"><option>
+              <p th:text="${body}" class="tableText" id="bodyShow"></p>
+            </option></p>
+          </div>
+        </select>
+        </fieldset>
+        <fieldset class="form-elem">
+        <select class="form-select" name="country" id="country-select">
+          <option value="" selected disabled hidden>Страна сборки</option>
+          <option value="">-- Выберите страну --</option>
+          <div th:each="country : ${countryList}">
+            <p th:if="${country!=null}" class="tableText"><option>
+              <p th:text="${country}" class="tableText" id="countryShow"></p>
+            </option></p>
+          </div>
+        </select>
+        </fieldset>
+        <fieldset class="form-elem">
+        <select class="form-select-sm" name="yearFrom" id="year-from-select">
+          <option value="" selected disabled hidden>Год от</option>
+          <option value="">-- Выберите год --</option>
+          <div th:each="year : ${yearList}">
+            <p th:if="${year!=null}" class="tableText"><option>
+              <p th:text="${year}" class="tableText" id="yearFromShow"></p>
+            </option></p>
+          </div>
+        </select>
+        <select class="form-select-sm" name="yearTo" id="year-to-select">
+          <option value="" selected disabled hidden>до</option>
+          <option value="">-- Выберите год --</option>
+          <div th:each="year : ${yearList}">
+            <p th:if="${year!=null}" class="tableText"><option>
+              <p th:text="${year}" class="tableText" id="yearToShow"></p>
+            </option></p>
+          </div>
+        </select>
+        </fieldset>
+        <fieldset class="form-elem">
+          <input type="text" placeholder="Цена от" name="priceFrom">
+          <input type="text" placeholder="до" name="priceTo">
+        </fieldset>
+        <fieldset class="form-elem">
+            <input type="text" placeholder="Пробег от" name="mileageFrom">
+            <input type="text" placeholder="до" name="mileageTo">
+        </fieldset>
+        <fieldset class="form-elem">
+            <input type="text" placeholder="Мощность от" name="enginePowerFrom">
+            <input type="text" placeholder="до" name="enginePowerTo">
+        </fieldset>
+        <fieldset class="form-elem">
+        <select class="form-select-sm" name="brand" id="brandtoselect">
+          <option value="" selected disabled hidden>Бренд</option>
+          <option value="">-- Выберите бренд --</option>
+          <div th:each="brand : ${brandList}">
+            <option th:value="${brand.name}"><p th:text="${brand.name}" class="tableText" id="brandNameShow"></p></option>
+          </div>
+        </select>
+        <select class="form-select-sm" name="mod" id="modeltoselect">
+          <option value="" selected>-- Выберите модель --</option>
+          <div th:each="model : ${modelList}">
+            <option th:value="${model.name}" th:class="${model.brand.name}"><p th:text="${model.name}" class="tableText" id="modelNameShow"></p></option>
+          </div>
+        </select>
+        </fieldset>
+        <fieldset class="form-elem">
+          <select class="form-select-sm" name="order" id="order-select">
+            <option value="" selected disabled hidden>Статус</option>
+            <option value="">-- Выберите статус машины --</option>
+            <option value="true">Проданная</option>
+            <option value="false">Непроданная</option>
+          </select>
+        <button type="submit" id="findCars">Поиск</button>
+        </fieldset>
+      </form>
     </div>
   </div>
 </div>
-<div class="container-fluid" style="width: 100%;">
-  <div class="row tableRow tableHeaderRow">
-    <div class="col-sm tableVerticalLineRight">
-      <p class="tableText">Марка</p>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <p class="tableText">Модель</p>
-    </div>
-    <div class="col-sm-1 tableVerticalLineRight">
-      <p class="tableText">Год выпуска</p>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <p class="tableText">Пробег</p>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <p class="tableText">Цена</p>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <p class="tableText">Тип топлива</p>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <p class="tableText">Коробка передач</p>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <p class="tableText">Тип привода</p>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <p class="tableText">Левый руль</p>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <p class="tableText">Мощность двигателя л.с</p>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <p class="tableText">Объем двигателя м3</p>
-    </div>
-    <div class="col-sm-1"></div>
-    <div class="col-sm-1"></div>
-    <div class="col-sm-1"></div>
-    <div class="col-sm-1"></div>
-    <div class="col-sm-1"></div>
-  </div>
+<script src="/styles/jquery-3.3.1.min.js"></script>
+<script src="/styles/dist/js/bootstrap.min.js"></script>
+<script src="/styles/bootstrap-select-1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="/styles/jquery.chained.min.js"></script>
+<script>
+  $(function(){
+    $("#modeltoselect").chained("#brandtoselect");
+
+    $("#brandtoselect").change(function(){
+
+    });
+  });
+</script>
+
+<table class="table table-hover" style="width: 100%; text-align: center">
+  <thead>
+  <tr>
+    <th>Марка</th>
+    <th>Модель</th>
+    <th>Год выпуска</th>
+    <th>Пробег</th>
+    <th>Цена</th>
+    <th>Тип топлива</th>
+    <th>Коробка передач</th>
+    <th>Тип привода</th>
+    <th>Левый руль</th>
+    <th>Мощность двигателя (л.с)</th>
+    <th>Объем двигателя (см^3)</th>
+    <th>Подробная информация</th>
+  </tr>
+  </thead>
   <div th:each="car : ${carList}">
-    <div class="row tableRow" id="contentRow">
-      <div class="col-sm tableVerticalLineRight">
-        <p th:if="${car.model==null}" class="tableText">-</p>
+    <tr class="carShow">
+      <td>
+        <div th:unless="${car.model==null}" class="tableText">
         <p th:text="${car.model.brand.name}" class="tableText" id="brandShow"></p>
-      </div>
-      <div class="col-sm tableVerticalLineRight">
-        <p th:if="${car.model==null}" class="tableText">-</p>
+        </div>
+      </td>
+      <td>
+        <div th:unless="${car.model==null}" class="tableText">
         <p th:text="${car.model.name}" class="tableText" id="modelShow"></p>
-      </div>
-      <div class="col-sm-1 tableVerticalLineRight">
-        <p th:if="${car.configuration==null}" class="tableText">-</p>
+        </div>
+      </td>
+      <td>
+        <div th:unless="${car.configuration==null}" class="tableText">
         <p th:text="${car.configuration.year}" class="tableText" id="yearShow"></p>
-      </div>
-      <div class="col-sm tableVerticalLineRight">
+        </div>
+      </td>
+      <td>
         <p th:text="${car.mileage}" class="tableText" id="mileageShow"></p>
-      </div>
-      <div class="col-sm tableVerticalLineRight">
+      </td>
+      <td>
         <p th:text="${car.price}" class="tableText" id="priceShow"></p>
-      </div>
-      <div class="col-sm tableVerticalLineRight">
-        <p th:text="${car.fuel}" class="tableText" id="fuelShow"></p>
-      </div>
-      <div class="col-sm tableVerticalLineRight">
-        <p th:text="${car.transmission}" class="tableText" id="transmissionShow"></p>
-      </div>
-      <div class="col-sm tableVerticalLineRight">
-        <p th:text="${car.drive}" class="tableText" id="driveShow"></p>
-      </div>
-      <div class="col-sm tableVerticalLineRight">
-        <p th:text="${car.left_steering_wheel}" class="tableText" id="leftShow"></p>
-      </div>
-      <div class="col-sm tableVerticalLineRight">
-        <p th:if="${car.configuration==null}" class="tableText">-</p>
-        <p th:text="${car.configuration.engine_power}" class="tableText" id="powerShow"></p>
-      </div>
-      <div class="col-sm tableVerticalLineRight">
-        <p th:if="${car.configuration==null}" class="tableText">-</p>
-        <p th:text="${car.configuration.engine_capacity}" class="tableText" id="capacityShow"></p>
-      </div>
-      <div class="col-sm-1 tableButtonBlock tableVerticalLineRight">
-        <form method="get" action="/car" class="inlineForm">
-          <input type="hidden" name="id" th:value="${car.id}">
+      </td>
+      <td>
+        <p th:text="${car.fuel.getReadName()}" class="tableText" id="fuelShow"></p>
+      </td>
+      <td>
+        <p th:text="${car.transmission.getReadName()}" class="tableText" id="transmissionShow"></p>
+      </td>
+      <td>
+        <p th:text="${car.drive.getReadName()}" class="tableText" id="driveShow"></p>
+      </td>
+      <td>
+        <p th:if="${car.left_steering_wheel}" class="tableText" id="leftShow">&#10004;</p>
+      </td>
+      <td>
+        <div th:unless="${car.configuration==null}" class="tableText">
+          <p th:text="${car.configuration.engine_power}" class="tableText" id="powerShow"></p>
+        </div>
+      </td>
+      <td>
+        <div th:unless="${car.configuration==null}" class="tableText">
+          <p th:text="${car.configuration.engine_capacity}" class="tableText" id="capacityShow"></p>
+        </div>
+      </td>
+      <td>
+        <a th:href="@{/car/{id}(id=${car.id})}">
           <button class="internalButton" id="infoButton">Информация</button>
-        </form>
-      </div>
-    </div>
+        </a>
+      </td>
+    </tr>
   </div>
-</div>
+</table>
 </body>
 </html>

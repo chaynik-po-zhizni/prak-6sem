@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
+
+  <link rel="stylesheet" type="text/css" href="/styles/dist/css/bootstrap.min.css">
+  <title>Новый клиент</title>
+</head>
+<body>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="/index">Главная страница</a> <!-- активная ссылка -->
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/brands">Бренды</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/clients">Клиенты</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/cars">Автомобили</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/orders">Заказы</a>
+  </li>
+</ul>
+
+<div class="row">
+  <div class="col" style="width: 100%; text-align: right; margin-right:20px;">
+    <h3><a href="/index">Автосалон</a></h3>
+    <p><img src="/styles/1639223273_56-papik-pro-p-mashinka-klipart-57.png" width="50" alt="">Сайт автосалона </p>
+  </div>
+</div>
+<h1 align="center"> Новый клиент для заказа</h1>
+<p></p>
+
+
+<form method="post" action="/newClientToOrder/add" class="form-container">
+  <input type="hidden" name="carId" th:value="${carId}">
+  <input type="hidden" name="phone" th:value="${phone}">
+  <input type="hidden" name="status" th:value="${status}">
+  <input type="hidden" name="test_drive" th:value="${test_drive}">
+  <p>
+    Введите фамилию имя и отчество
+  </p>
+  <p>
+    <input type="text" class="resized" placeholder="ФИО" name="name" required>
+  </p>
+  <p>
+   Введите адрес электронной почты
+  </p>
+  <p>
+    <input type="email" class="resized" placeholder="Почта" name="email">
+  </p>
+  <p>
+    Введите адрес проживания
+  </p>
+  <p>
+    <input type="text" class="resized" placeholder="Адрес" name="address">
+  </p>
+  <button type="submit" class="btn btn-success">Сохранить</button>
+</form>
+</body>
+</html>

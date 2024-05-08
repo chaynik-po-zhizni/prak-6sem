@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
-  <link rel="stylesheet" type="text/css" href="/styles/scss/bootstrap.scss">
+  <link rel="stylesheet" type="text/css" href="/styles/dist/css/bootstrap.min.css">
   <title>Модели</title>
 </head>
 <body>
@@ -16,98 +16,108 @@
     document.getElementById("myForm").style.display = "none";
   }
 </script>
-<div class="container-fluid" style="width: 50%;">
-  <div class="row tableRow tableHeaderRow"> <!-- Заголовок -->
-    <div class="col-sm-1 tableVerticalLineRight">
-      <a href="../../index">Главная страница</a>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <a href="../../cars">Автомобили</a>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <a href="../../orders">Заказы</a>
-    </div>
-    <div class="col-sm-1 tableVerticalLineRight">
-      <a href="../../clients">Клиенты</a>
-    </div>
-    <div class="col-sm-1"></div>
-    <div class="col-sm-1"></div>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="/index">Главная страница</a> <!-- активная ссылка -->
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/brands">Бренды</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/clients">Клиенты</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/cars">Автомобили</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/orders">Заказы</a>
+  </li>
+</ul>
+
+<div class="row">
+  <div class="col" style="width: 100%; text-align: right; margin-right:20px;">
+    <h3><a href="/index">Автосалон</a></h3>
+    <p><img src="/styles/1639223273_56-papik-pro-p-mashinka-klipart-57.png" width="50" alt="">Сайт автосалона </p>
   </div>
 </div>
-<p>Модели бренда:</p>
-<p th:text="${brand}"></p>
-<div class="container-fluid" style="width: 75%;">
+<h1 align="center" th:inline="text" >Модели бренда [[${brand}]] </h1>
+<p></p>
+
+<div class="container-fluid" style="width: 100%; text-align: left;">
   <div class="row">
     <div class="col-sm" style="text-align: left;">
-      <p></p>
-    </div>
-    <div class="col-sm" style="text-align: left;">
-      <form method="get" action="/models">
+      <label for="newBrand">Введите название новой модели:</label>
+      <form method="post" action="/models/add" id="newBrand">
         <input type="hidden" name="brandName" th:value="${brand}">
         <input name="name" type="text">
-        <button type="submit" id="findModels">Поиск</button>
+        <button type="submit" class="btn btn-warning" id="addNewModel">Добавить</button>
       </form>
     </div>
   </div>
 </div>
+<p></p>
+<p></p>
 
-<div class="container-fluid" style="width: 75%;">
-  <div class="row">
-    <div class="col-sm" style="text-align: left;">
-      <p>Введите название новой модели:</p>
-      <p></p>
-    </div>
-    <div class="col-sm" style="text-align: left;">
-      <form method="post" action="/models/add">
-        <input type="hidden" name="brandName" th:value="${brand}">
-        <input name="name" type="text">
-        <button type="submit" id="addNewBrand">Добавить</button>
-      </form>
-    </div>
-  </div>
-</div>
-
-
-<div class="container-fluid" style="width: 75%;">
+<div class="container-fluid" style="width: 100%; text-align: right;">
   <div class="row">
     <div class="col-sm" style="text-align: left;">
       <p>Измените название модели:</p>
-    </div>
-    <div class="col-sm" style="text-align: left;">
-      <button class="open-button" onclick="openForm()">Изменить</button>
-      <div class="form-popup" id="myForm">
-        <form method="post" action="/models/edit" class="form-container">
+      <button class="open-button" onclick="openForm()" id="changebrand">Изменить</button>
+      <div class="form-popup" id="myForm" style="text-align: left;">
+        <form method="post" action="/models/edit" class="form-container" >
           <input type="hidden" name="brandName" th:value="${brand}">
           <input type="text" placeholder="Старое название" name="oldName" required>
           <input type="text" placeholder="Новое название" name="newName" required>
-          <button type="submit" class="btn">Сохранить</button>
-          <button type="button" class="btn cancel" onclick="closeForm()">Закрыть</button>
+          <button type="submit" class="btn" id="save">Сохранить</button>
+          <button type="button" id="cancelButton" class="btn cancel" onclick="closeForm()">Закрыть</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+<p></p>
+<p></p>
 
-<div class="container-fluid" style="width: 50%;">
+<div class="row">
+  <div class="col-sm" style="text-align: center;">
+    <form method="get" action="/models">
+      <input type="hidden" name="brandName" th:value="${brand}">
+      <input name="name" type="text" id="findName">
+      <button type="submit" id="findModels">Поиск</button>
+    </form>
+  </div>
+</div>
+<p></p>
+
+
+<table class="table table-hover" style="width: 100%; text-align: center">
+  <thead>
+  <tr>
+    <th>Модель</th>
+    <th>Посмотреть автомобили модели</th>
+    <th>Удалить модель</th>
+  </tr>
+  </thead>
   <div th:each="model : ${modelList}">
-    <div class="row tableRow">
-      <div class="col-sm">
+    <tr class="tableModels">
+      <td>
         <p th:text="${model.name}" class="tableText"></p>
-      </div>
-      <div class="col-sm tableButtonBlock" style="text-align: right;">
+      </td>
+      <td>
+        <form method="get" action="/cars" class="inlineForm">
+          <input type="hidden" name="brand" th:value="${brand}">
+          <input type="hidden" name="mod" th:value="${model.name}">
+          <button type="submit" id="carsbutton"  th:inline="text" class="btn">Автомобили [[${model.brand.name}]] [[${model.name}]]</button>
+        </form>
+      </td>
+      <td>
         <form method="post" action="/models/delete" class="inlineForm">
           <input type="hidden" name="id" th:value="${model.id}">
-          <button type="submit" class="internalButton deleteButton">Удалить из базы</button>
+          <button type="submit" class="btn btn-danger">Удалить из базы</button>
         </form>
-      </div>
-      <div class="col-sm tableButtonBlock" style="text-align: right;">
-        <a th:href="@{/models/car/{id}(id=${model.id})}">
-          <button class="internalButton" id="infoButton">Автомобили</button>
-        </a>
-      </div>
-    </div>
+      </td>
+    </tr>
   </div>
-  <div class="row tableRow"></div>
-</div>
+</table>
 </body>
 </html>

@@ -8,10 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.msu.cmc.prak.DAO.BrandDAO;
 import ru.msu.cmc.prak.DAO.CarDAO;
 import ru.msu.cmc.prak.DAO.ModelDAO;
 import ru.msu.cmc.prak.entities.*;
 
+import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -20,6 +23,8 @@ public class NewCarController {
     private CarDAO carDAO;
     @Autowired
     private ModelDAO modelDAO;
+    @Autowired
+    private BrandDAO brandDAO;
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -30,13 +35,19 @@ public class NewCarController {
         return t;
     }
     private List<String> stringToList(String t) {
+        if (t == null) {
+            return null;
+        }
         String[] res = t.split(";");
         System.out.println(res);
         return List.of(res);
     }
 
     @GetMapping(value = {"/newCar"})
-    public String getNewCar() {
+    public String getNewCar(@NonNull Model model) {
+        model.addAttribute("brandList", brandDAO.getAll());
+        model.addAttribute("modelList", modelDAO.getAll());
+        model.addAttribute("maxYear", Year.now().getValue());
         return "newCar";
     }
 

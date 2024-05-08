@@ -1,86 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles/dist/css/bootstrap.min.css">
     <title>Клиенты</title>
 </head>
 <body>
-<div class="container-fluid" style="width: 50%;">
-    <div class="row tableRow tableHeaderRow"> <!-- Заголовок -->
-        <div class="col-sm-1 tableVerticalLineRight">
-            <a href="../index">Главная страница</a>
-        </div>
-        <div class="col-sm tableVerticalLineRight">
-            <a href="../cars">Автомобили</a>
-        </div>
-        <div class="col-sm tableVerticalLineRight">
-            <a href="../orders">Заказы</a>
-        </div>
-        <div class="col-sm-1 tableVerticalLineRight">
-            <a href="../clients">Клиенты</a>
-        </div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-1"></div>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="/index">Главная страница</a> <!-- активная ссылка -->
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/brands">Бренды</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/clients">Клиенты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/cars">Автомобили</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/orders">Заказы</a>
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col" style="width: 100%; text-align: right; margin-right:20px;">
+        <h3><a href="/index">Автосалон</a></h3>
+        <p><img src="/styles/1639223273_56-papik-pro-p-mashinka-klipart-57.png" width="50" alt="">Сайт автосалона </p>
     </div>
 </div>
-<div class="col-sm tableButtonBlock" style="text-align: right;">
+<h1 align="center"> Клиенты</h1>
+<p></p>
+
+
+<div class="col" style="text-align: right; width: 100%; margin-right:20px">
     <a href="../newClient">
-        <button class="internalButton" id="addClient">Добавить нового клиента</button>
+        <button class="btn btn-warning" id="addClient">Добавить нового клиента</button>
     </a>
 </div>
-<div class="container-fluid" style="width: 75%;">
+
+
+<div class="container-fluid" style="width: 100%; text-align: left;">
     <div class="row">
         <div class="col-sm" style="text-align: left;">
-            <p></p>
-        </div>
-        <div class="col-sm" style="text-align: left;">
             <form method="get" action="/clients">
+                <fieldset class="form-elem">
                 <input type="text" placeholder="ФИО" name="name">
-                <input type="text" placeholder="Почта" name="email">
-                <input type="text" placeholder="Телефон" name="phone">
-                <button type="submit" id="findModels">Поиск</button>
+                </fieldset>
+                <fieldset class="form-elem">
+                    <input type="email" placeholder="Почта" name="email">
+                </fieldset>
+                <fieldset class="form-elem">
+                    <input type="tel" placeholder="Телефон" name="phone" pattern="[0-9]{10}">
+                </fieldset>
+                <button type="submit" id="findClients">Поиск</button>
             </form>
         </div>
     </div>
 </div>
-<div class="container-fluid" style="width: 100%;">
-    <div class="row tableRow tableHeaderRow">
-        <div class="col-sm tableVerticalLineRight">
-            <p class="tableText">ФИО</p>
-        </div>
-        <div class="col-sm tableVerticalLineRight">
-            <p class="tableText">Адрес</p>
-        </div>
-        <div class="col-sm tableVerticalLineRight">
-            <p class="tableText">Телефон</p>
-        </div>
-        <div class="col-sm-1 tableVerticalLineRight">
-            <p class="tableText">Электронная почта</p>
-        </div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-1"></div>
-    </div>
+
+
+<table class="table table-hover" style="width: 100%; text-align: center">
+    <thead>
+    <tr>
+        <th>ФИО</th>
+        <th>Адрес</th>
+        <th>Телефон</th>
+        <th>Электронная почта</th>
+        <th>Подробная информация</th>
+    </tr>
+    </thead>
     <div th:each="client : ${clientList}">
-        <div class="row tableRow" id="contentRow">
-            <div class="col-sm tableVerticalLineRight">
+        <tr class="clientShow">
+            <td>
                 <p th:text="${client.fullName}" class="tableText" id="nameShow"></p>
-            </div>
-            <div class="col-sm tableVerticalLineRight">
-                <p th:text="${client.phone}" class="tableText" id="phoneShow"></p>
-            </div>
-            <div class="col-sm-1 tableVerticalLineRight">
+            </td>
+            <td>
+                <p th:text="${client.address}" class="tableText" id="addressShow"></p>
+            </td>
+            <td>
+                <p th:text="${client.getStringPhone()}" class="tableText" id="phoneShow"></p>
+            </td>
+            <td>
                 <p th:text="${client.email}" class="tableText" id="mailShow"></p>
-            </div>
-            <div class="col-sm-1 tableButtonBlock tableVerticalLineRight">
+            </td>
+            <td>
                 <form method="get" action="/client" class="inlineForm">
                     <input type="hidden" name="id" th:value="${client.id}">
                     <button class="internalButton" id="infoButton">Информация</button>
                 </form>
-            </div>
-        </div>
+            </td>
+        </tr>
     </div>
-</div>
+</table>
 </body>
 </html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles/dist/css/bootstrap.min.css">
+    <title>Заказ</title>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="/index">Главная страница</a> <!-- активная ссылка -->
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/brands">Бренды</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/clients">Клиенты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/cars">Автомобили</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/orders">Заказы</a>
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col" style="width: 100%; text-align: right; margin-right:20px;">
+        <h3><a href="/index">Автосалон</a></h3>
+        <p><img src="/styles/1639223273_56-papik-pro-p-mashinka-klipart-57.png" width="50" alt="">Сайт автосалона </p>
+    </div>
+</div>
+<h1 align="center"> Информация о заказе </h1>
+<p></p>
+
+
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Клиент:</div>
+        <div class="col-sm">
+            <a th:href="@{/client(id=${order.client.id})}">
+                <button class="internalButton">Клиент</button>
+            </a>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Фамилия Имя Отчество:</div>
+        <div class="col-sm">
+            <p th:text="${order.client.fullName}" class="tableText" id="nameShow"></p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Телефон: </div>
+        <div class="col-sm">
+            <p th:text="${order.client.getStringPhone()}" class="tableText" id="phoneShow"></p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Автомобиль:</div>
+        <div class="col-sm">
+            <a th:href="@{/car/{id}(id=${order.car.id})}">
+                <button class="internalButton">Автомобиль</button>
+            </a>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Бренд:</div>
+        <div class="col-sm" th:if="${order.car.model != null}">
+            <p th:text="${order.car.model.brand.name}" class="tableText" id="brandShow"></p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Модель:</div>
+        <div class="col-sm" th:if="${order.car.model != null}">
+            <p th:text="${order.car.model.name}" class="tableText" id="modelShow"></p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Цена:</div>
+        <div class="col-sm">
+            <p th:text="${order.car.price}" class="tableText" id="priceShow"></p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Пробег: </div>
+        <div class="col-sm">
+            <p th:text="${order.car.mileage}" class="tableText" id="mileageShow"></p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Дата и время создания:</div>
+        <div class="col-sm">
+            <p th:text="${order.date.toString()}" class="tableText" id="timeShow"></p>
+        </div>
+    </div>
+<form method="post" th:action="@{/order/edit}" class="container-fluid">
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Статус заказа:</div>
+        <div class="col-sm">
+            <select class="form-select" name="status" id="status-select" style="text-align: center;">
+                <p th:if="${order.status.getReadName() == 'Создан'}" class="tableText">
+                    <option value="issued" selected>Создан</option>
+                </p>
+                <p th:unless="${order.status.getReadName() == 'Создан'}" class="tableText">
+                    <option value="issued">Создан</option>
+                </p>
+                <p th:if="${order.status.getReadName() == 'В процессе'}" class="tableText">
+                    <option value="in_progress" selected>В процессе</option>
+                </p>
+                <p th:unless="${order.status.getReadName() == 'В процессе'}" class="tableText">
+                    <option value="in_progress">В процессе</option>
+                </p>
+                <p th:if="${order.status.getReadName() == 'Готов'}" class="tableText">
+                    <option value="done" selected>Готов</option>
+                </p>
+                <p th:unless="${order.status.getReadName() == 'Готов'}" class="tableText">
+                    <option value="done">Готов</option>
+                </p>
+                <p th:if="${order.status.getReadName() == 'Отменен'}" class="tableText">
+                    <option value="canceled" selected>Отменен</option>
+                </p>
+                <p th:unless="${order.status.getReadName() == 'Отменен'}" class="tableText">
+                    <option value="canceled">Отменен</option>
+                </p>
+            </select>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Нужен тест драйв:</div>
+        <div class="col-sm">
+            <select class="form-select" name="test_drive" id="test_drive-select" style="text-align: center;">
+                <p th:if="${order.test_drive}" class="tableText">
+                    <option value="true" selected>Да</option>
+                </p>
+                <p th:unless="${order.test_drive}" class="tableText">
+                    <option value="true">Да</option>
+                </p>
+                <p th:unless="${order.test_drive}" class="tableText">
+                    <option value="false" selected>Нет</option>
+                </p>
+                <p th:if="${order.test_drive}" class="tableText">
+                    <option value="false">Нет</option>
+                </p>
+            </select>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm">
+            <input type="hidden" name="id" th:value="${order.id}" class="internalButton info" id="idInput">
+            <button type="submit" class="internalButton" id="editButton">Изменить</button>
+        </div>
+    </div>
+    <div class="row tableRow"></div>
+</form>
+
+<div class="col-sm tableButtonBlock" style="text-align: right;">
+    <form method="post" action="/orders/delete" class="inlineForm">
+        <input type="hidden" name="id" th:value="${order.id}">
+        <button type="submit" class="btn btn-danger">Удалить из базы</button>
+    </form>
+</div>
+</body>
+</html>

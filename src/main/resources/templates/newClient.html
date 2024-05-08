@@ -3,35 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
+
+    <link rel="stylesheet" type="text/css" href="/styles/dist/css/bootstrap.min.css">
     <title>Новый клиент</title>
 </head>
 <body>
-<div class="container-fluid" style="width: 50%;">
-    <div class="row tableRow tableHeaderRow"> <!-- Заголовок -->
-        <div class="col-sm-1 tableVerticalLineRight">
-            <a href="../index">Главная страница</a>
-        </div>
-        <div class="col-sm tableVerticalLineRight">
-            <a href="../cars">Автомобили</a>
-        </div>
-        <div class="col-sm tableVerticalLineRight">
-            <a href="../orders">Заказы</a>
-        </div>
-        <div class="col-sm-1 tableVerticalLineRight">
-            <a href="../clients">Клиенты</a>
-        </div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-1"></div>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="/index">Главная страница</a> <!-- активная ссылка -->
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/brands">Бренды</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/clients">Клиенты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/cars">Автомобили</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/orders">Заказы</a>
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col" style="width: 100%; text-align: right; margin-right:20px;">
+        <h3><a href="/index">Автосалон</a></h3>
+        <p><img src="/styles/1639223273_56-papik-pro-p-mashinka-klipart-57.png" width="50" alt="">Сайт автосалона </p>
     </div>
 </div>
+<h1 align="center"> Новый клиент</h1>
+<p></p>
 
 
-<form method="post" action="/clients/add" class="form-container">
-        <input type="text" placeholder="ФИО" name="name" required>
-        <input type="text" placeholder="Почта" name="email">
-        <input type="text" placeholder="Адрес" name="address">
-        <input type="text" placeholder="Телефон" name="phone" required>
-        <button type="submit" class="btn">Сохранить</button>
+<form method="post" action="/clients/add" class="form-container" style="width: 100%; ">
+    <p>
+        Введите фамилию имя и отчество
+    </p>
+    <p>
+        <input type="text" class="resized" placeholder="ФИО" name="name" required>
+    </p>
+    <p>
+        Введите адрес электронной почты
+    </p>
+    <p>
+        <input type="email" class="resized" placeholder="Почта" name="email">
+    </p>
+    <p>
+        Введите адрес проживания
+    </p>
+    <p>
+        <input type="text" class="resized" placeholder="Адрес" name="address">
+    </p>
+    <p>
+        Введите телефон (Только цифры без других символов и без кода страны т.е без +7/8)
+    </p>
+    <p>
+        <input type="tel" pattern="[0-9]{10}" class="resized" placeholder="Телефон" name="phone" required>
+    </p>
+    <button type="submit" class="btn btn-success">Сохранить</button>
 </form>
 </body>
 </html>

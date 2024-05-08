@@ -1,10 +1,334 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/bootstrap-select-1.13.14/dist/css/bootstrap-select.min.css">
+    <title>Автомобиль</title>
 </head>
 <body>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="/index">Главная страница</a> <!-- активная ссылка -->
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/brands">Бренды</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/clients">Клиенты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/cars">Автомобили</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/orders">Заказы</a>
+    </li>
+</ul>
 
+<div class="row">
+    <div class="col" style="width: 100%; text-align: right; margin-right:20px;">
+        <h3><a href="/index">Автосалон</a></h3>
+        <p><img src="/styles/1639223273_56-papik-pro-p-mashinka-klipart-57.png" width="50" alt="">Сайт автосалона </p>
+    </div>
+</div>
+<h1 align="center"> Подробная информация об автомобиле </h1>
+<p></p>
+
+<div th:if="${isOrdered}" class="col blue" style="text-align: center; width: 100%;">
+    <a th:href="@{/orderCar(id=${car.id})}">
+        <button class="btn btn-info">Заказ</button>
+    </a>
+</div>
+<div th:unless="${isOrdered}" class="col yellow" style="text-align: center; width: 100%;">
+    <a th:href="@{/newOrder(carId=${car.id})}">
+        <button class="btn btn-warning">Заказать</button>
+    </a>
+</div>
+
+<form method="post" th:action="@{/car/edit}" class="container-fluid">
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Привод:</div>
+        <div class="col-sm">
+        <select class="form-select" name="drive" id="drive-select" style="text-align: center;">
+            <p th:if="${car.drive.getReadName() == 'Передний'}" class="tableText">
+                <option value="front" selected>Передний</option>
+            </p>
+            <p th:unless="${car.drive.getReadName() == 'Передний'}" class="tableText">
+                <option value="front">Передний</option>
+            </p>
+            <p th:if="${car.drive.getReadName() == 'Задний'}" class="tableText">
+                <option value="rear" selected>Задний</option>
+            </p>
+            <p th:unless="${car.drive.getReadName() == 'Задний'}" class="tableText">
+                <option value="rear">Задний</option>
+            </p>
+            <p th:if="${car.drive.getReadName() == 'Полный'}" class="tableText">
+                <option value="front" selected>Полный</option>
+            </p>
+            <p th:unless="${car.drive.getReadName() == 'Полный'}" class="tableText">
+                <option value="front">Полный</option>
+            </p>
+        </select>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Топливо:</div>
+        <div class="col-sm">
+        <select class="form-select" name="fuel" id="fuel-select" style="text-align: center;">
+            <p th:if="${car.fuel.getReadName() == 'Газ'}" class="tableText">
+                <option value="gas" selected>Газ</option>
+            </p>
+            <p th:unless="${car.fuel.getReadName() == 'Газ'}" class="tableText">
+                <option value="gas">Газ</option>
+            </p>
+            <p th:if="${car.fuel.getReadName() == 'Дизель'}" class="tableText">
+                <option value="diesel" selected>Дизель</option>
+            </p>
+            <p th:unless="${car.fuel.getReadName() == 'Дизель'}" class="tableText">
+                <option value="diesel">Дизель</option>
+            </p>
+            <p th:if="${car.fuel.getReadName() == 'Бензин'}" class="tableText">
+                <option value="gasoline" selected>Бензин</option>
+            </p>
+            <p th:unless="${car.fuel.getReadName() == 'Бензин'}" class="tableText">
+                <option value="gasoline">Бензин</option>
+            </p>
+            <p th:if="${car.fuel.getReadName() == 'Электричество'}" class="tableText">
+                <option value="electricity" selected>Электричество</option>
+            </p>
+            <p th:unless="${car.fuel.getReadName() == 'Электричество'}" class="tableText">
+                <option value="electricity">Электричество</option>
+            </p>
+        </select>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Коробка передач:</div>
+        <div class="col-sm">
+        <select class="form-select" name="transmission" id="transmission-select" style="text-align: center;">
+            <p th:if="${car.transmission.getReadName() == 'Механика'}" class="tableText">
+                <option value="MT" selected>Механика</option>
+            </p>
+            <p th:unless="${car.transmission.getReadName() == 'Механика'}" class="tableText">
+                <option value="MT">Механика</option>
+            </p>
+            <p th:if="${car.transmission.getReadName() == 'Автомат'}" class="tableText">
+                <option value="AT" selected>Автомат</option>
+            </p>
+            <p th:unless="${car.transmission.getReadName() == 'Автомат'}" class="tableText">
+                <option value="AT">Автомат</option>
+            </p>
+            <p th:if="${car.transmission.getReadName() == 'Вариатор'}" class="tableText">
+                <option value="CVT" selected>Вариатор</option>
+            </p>
+            <p th:unless="${car.transmission.getReadName() == 'Вариатор'}" class="tableText">
+                <option value="CVT">Вариатор</option>
+            </p>
+            <p th:if="${car.transmission.getReadName() == 'Робот'}" class="tableText">
+                <option value="Robot" selected>Робот</option>
+            </p>
+            <p th:unless="${car.transmission.getReadName() == 'Робот'}" class="tableText">
+                <option value="Robot">Робот</option>
+            </p>
+        </select>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Руль:</div>
+        <div class="col-sm">
+        <select class="form-select" name="left" id="left-select" style="text-align: center;">
+            <p th:if="${car.left_steering_wheel}" class="tableText">
+                <option value="true" selected>Левый</option>
+            </p>
+            <p th:unless="${car.left_steering_wheel}" class="tableText">
+                <option value="true">Левый</option>
+            </p>
+            <p th:unless="${car.left_steering_wheel}" class="tableText">
+                <option value="false" selected>Правый</option>
+            </p>
+            <p th:if="${car.left_steering_wheel}" class="tableText">
+                <option value="false">Правый</option>
+            </p>
+        </select>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Бренд:</div>
+        <div class="col-sm">
+        <select class="form-select" name="brandName" id="brandtoselect" style="text-align: center;">
+            <option value="" selected>-- Выберите бренд --</option>
+            <div th:each="brand : ${brandList}">
+                <p th:if="${car.model != null && car.model.brand.name == brand.name}" class="tableText">
+                    <option th:value="${brand.name}" selected><p th:text="${brand.name}" class="tableText" id="brandNameShow1"></p></option>
+                </p>
+                <p th:unless="${car.model != null && car.model.brand.name == brand.name}" class="tableText">
+                    <option th:value="${brand.name}"><p th:text="${brand.name}" class="tableText" id="brandNameShow2"></p></option>
+                </p>
+            </div>
+        </select>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Модель:</div>
+        <div class="col-sm">
+        <select class="form-select" name="modelName" id="modeltoselect" style="text-align: center;">
+            <option value="" selected>-- Выберите модель --</option>
+            <div th:each="model : ${modelList}">
+                <p th:if="${car.model != null && car.model.name == model.name}" class="tableText">
+                    <option th:value="${model.name}" th:class="${model.brand.name}" selected><p th:text="${model.name}" class="tableText" id="modelNameShow1"></p></option>
+                </p>
+                <p th:unless="${car.model != null && car.model.brand.name == model.name}" class="tableText">
+                    <option th:value="${model.name}" th:class="${model.brand.name}"><p th:text="${model.name}" class="tableText" id="modelNameShow2"></p></option>
+                </p>
+            </div>
+        </select>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Пробег:</div>
+        <div class="col-sm">
+            <input type="text" name="mileage" th:value="${car.mileage}" class="internalButton info" id="mileInput">
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Цена:</div>
+        <div class="col-sm">
+            <input type="text" name="price" th:value="${car.price}" class="internalButton info" id="priceInput" required>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Мощность двигателя в лошадиных силах:</div>
+        <div class="col-sm">
+            <p th:if="${car.configuration != null}" class="tableText">
+                <input type="text" name="power" th:value="${car.configuration.engine_power}" class="internalButton info" id="powerInput">
+            </p>
+            <p th:unless="${car.configuration != null}" class="tableText">
+                <input type="text" name="power" class="internalButton info" id="powerInput">
+            </p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Объем двигателя в см^3:</div>
+        <div class="col-sm">
+            <p th:if="${car.configuration != null}" class="tableText">
+                <input type="text" name="capacity" th:value="${car.configuration.engine_capacity}" class="internalButton info" id="capacityInput">
+            </p>
+            <p th:unless="${car.configuration != null}" class="tableText">
+                <input type="text" name="capacity" class="internalButton info" id="capacityInput">
+            </p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Год выпуска:</div>
+        <div class="col-sm">
+            <p th:if="${car.configuration != null}" class="tableText">
+                <input type="number" style="text-align: center; width: 100%;" th:value="${car.configuration.year}" min="1888" max="2024" th:attr="max=${maxYear}" step="1"  name="year" id="yearInput">
+            </p>
+            <p th:unless="${car.configuration != null}" class="tableText">
+                <input type="number" style="text-align: center; width: 100%;" min="1888" max="2024" th:attr="max=${maxYear}" step="1"  name="year" id="yearInput">
+            </p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight"> Количество мест:</div>
+        <div class="col-sm">
+            <p th:if="${car.configuration != null}" class="tableText">
+                <input type="text" name="numSeats" th:value="${car.configuration.num_seats}" class="internalButton info" id="numSeatsInput">
+            </p>
+            <p th:unless="${car.configuration != null}" class="tableText">
+                <input type="text" name="numSeats" class="internalButton info" id="numSeatsInput">
+            </p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Количество дверей:</div>
+        <div class="col-sm">
+            <p th:if="${car.configuration != null}" class="tableText">
+                <input type="text" name="numDoors" th:value="${car.configuration.num_doors}" class="internalButton info" id="numDoorsInput">
+            </p>
+            <p th:unless="${car.configuration != null}" class="tableText">
+                <input type="text" name="numDoors" class="internalButton info" id="numDoorsInput">
+            </p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Тип кузова:</div>
+        <div class="col-sm">
+            <p th:if="${car.configuration != null}" class="tableText">
+                <input type="text" name="carBody" th:value="${car.configuration.car_body}" class="internalButton info" id="carBodyInput">
+            </p>
+            <p th:unless="${car.configuration != null}" class="tableText">
+                <input type="text" name="carBody" class="internalButton info" id="carBodyInput">
+            </p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Страна сборки:</div>
+        <div class="col-sm">
+            <p th:if="${car.configuration != null}" class="tableText">
+                <input type="text" name="country" th:value="${car.configuration.assembly_country}" class="internalButton info" id="countryInput">
+            </p>
+            <p th:unless="${car.configuration != null}" class="tableText">
+                <input type="text" name="country" class="internalButton info" id="countryInput">
+            </p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Цвет кузова:</div>
+        <div class="col-sm">
+            <p th:if="${car.configuration != null}" class="tableText">
+                <input type="text" name="color" th:value="${car.configuration.color}" class="internalButton info" id="colorInput">
+            </p>
+            <p th:unless="${car.configuration != null}" class="tableText">
+                <input type="text" name="color" class="internalButton info" id="colorInput">
+            </p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Объем багажника:</div>
+        <div class="col-sm">
+            <p th:if="${car.configuration != null}" class="tableText">
+                <input type="text" name="volume" th:value="${car.configuration.trunk_volume}" class="internalButton info" id="volumeInput">
+            </p>
+            <p th:unless="${car.configuration != null}" class="tableText">
+                <input type="text" name="volume" class="internalButton info" id="volumeInput">
+            </p>
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm-1 info tableVerticalLineRight">Особенности:</div>
+        <div class="col-sm">
+            <input type="text" name="inform" th:value="${car.featuresToString()}" class="internalButton info" id="featuresInput">
+        </div>
+    </div>
+    <div class="row tableRow">
+        <div class="col-sm">
+            <input type="hidden" name="id" th:value="${car.id}" class="internalButton info" id="idInput">
+            <button type="submit" class="internalButton" id="editButton">Изменить</button>
+        </div>
+    </div>
+    <div class="row tableRow"></div>
+</form>
+<script src="/styles/jquery-3.3.1.min.js"></script>
+<script src="/styles/dist/js/bootstrap.min.js"></script>
+<script src="/styles/bootstrap-select-1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="/styles/jquery.chained.min.js"></script>
+<script>
+    $(function(){
+        $("#modeltoselect").chained("#brandtoselect");
+
+        $("#brandtoselect").change(function(){
+
+        });
+    });
+</script>
+<p></p>
+<p></p>
+<div class="col red" style="text-align: center; width: 100%;">
+    <a th:href="@{/cars/delete(id=${car.id})}">
+        <button class="btn  btn-danger">Удалить из базы</button>
+    </a>
+</div>
 </body>
 </html>

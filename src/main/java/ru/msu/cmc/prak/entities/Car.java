@@ -84,4 +84,16 @@ public class Car implements CommonEntity {
         res = res && Objects.equals(this.configuration, other.configuration);
         return res;
     }
+
+    public String featuresToString() {
+        if (features == null) {
+            return null;
+        }
+        StringBuilder res = new StringBuilder();
+        for (String s: features) {
+            res.append(s);
+            res.append(";");
+        }
+        return res.toString();
+    }
 }

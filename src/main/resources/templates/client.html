@@ -3,47 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
+  <link rel="stylesheet" type="text/css" href="/styles/dist/css/bootstrap.min.css">
   <title>Клиент</title>
 </head>
 <body>
-<div class="container-fluid" style="width: 50%;">
-  <div class="row tableRow tableHeaderRow"> <!-- Заголовок -->
-    <div class="col-sm-1 tableVerticalLineRight">
-      <a href="../../index">Главная страница</a>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <a href="../../cars">Автомобили</a>
-    </div>
-    <div class="col-sm tableVerticalLineRight">
-      <a href="../../orders">Заказы</a>
-    </div>
-    <div class="col-sm-1 tableVerticalLineRight">
-      <a href="../../clients">Клиенты</a>
-    </div>
-    <div class="col-sm-1"></div>
-    <div class="col-sm-1"></div>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="/index">Главная страница</a> <!-- активная ссылка -->
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/brands">Бренды</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/clients">Клиенты</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/cars">Автомобили</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/orders">Заказы</a>
+  </li>
+</ul>
+
+<div class="row">
+  <div class="col" style="width: 100%; text-align: right; margin-right:20px;">
+    <h3><a href="/index">Автосалон</a></h3>
+    <p><img src="/styles/1639223273_56-papik-pro-p-mashinka-klipart-57.png" width="50" alt="">Сайт автосалона </p>
   </div>
 </div>
+<h1 align="center"> Личные данные клиента</h1>
+<p></p>
 
 <div class="col-sm tableButtonBlock" style="text-align: right;">
-  <form method="post" action="/clients/delete" class="inlineForm">
-    <input type="hidden" name="id" th:value="${client.id}">
-    <button type="submit" class="internalButton deleteButton">Удалить из базы</button>
+  <form method="get" action="/orders" class="inlineForm">
+    <input type="hidden" name="phone" th:value="${client.phone}">
+    <button type="submit" class="btn btn-info"> Заказы </button>
   </form>
 </div>
 
-<p class="pageName">Личные данные клиента </p>
 <form method="post" th:action="@{/client/edit}" class="container-fluid">
   <div class="row tableRow">
     <div class="col-sm-1 info tableVerticalLineRight">Фамилия Имя Отчество:</div>
     <div class="col-sm">
-      <input type="text" name="name" th:value="${client.fullName}" class="internalButton info" id="nameInput">
+      <input type="text" name="name" th:value="${client.fullName}" class="internalButton info" id="nameInput" required>
     </div>
   </div>
   <div class="row tableRow">
     <div class="col-sm-1 info tableVerticalLineRight">Адрес электронной почты: </div>
     <div class="col-sm">
-      <input type="text" name="email" th:value="${client.email}" class="internalButton info" id="mailInput">
+      <input type="email" name="email" th:value="${client.email}" class="internalButton info" id="mailInput">
     </div>
   </div>
   <div class="row tableRow">
@@ -55,7 +63,7 @@
   <div class="row tableRow">
     <div class="col-sm-1 info tableVerticalLineRight">Телефон: </div>
     <div class="col-sm">
-      <input type="text" name="phone" th:value="${client.phone}" class="internalButton info" id="phoneInput">
+      <input type="tel" name="phoneString"  pattern="[0-9]{10}"  th:value="${client.getStringPhone()}" class="internalButton info" id="phoneInput" required>
     </div>
   </div>
   <div class="row tableRow">
@@ -66,13 +74,14 @@
   </div>
   <div class="row tableRow"></div>
 </form>
+<p></p>
+<p></p>
 
 <div class="col-sm tableButtonBlock" style="text-align: right;">
-  <form method="post" action="/orders" class="inlineForm">
+  <form method="post" action="/clients/delete" class="inlineForm">
     <input type="hidden" name="id" th:value="${client.id}">
-    <button type="submit" class="internalButton"> Заказы </button>
+    <button type="submit" class="btn btn-danger">Удалить из базы</button>
   </form>
 </div>
-
 </body>
 </html>

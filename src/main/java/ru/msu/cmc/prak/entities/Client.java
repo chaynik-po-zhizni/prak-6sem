@@ -49,4 +49,15 @@ public class Client implements CommonEntity {
         res = res && Objects.equals(this.fullName, other.fullName);
         return res;
     }
+
+    public String getStringPhone() {
+        String res = String.valueOf(phone);
+        if (res.length() > 10) {
+            res = res.substring(res.length() - 10);
+        }
+        if (res.length() < 10) {
+            res = "0".repeat(10 - res.length()) + res;
+        }
+        return res;
+    }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
-    <link rel="stylesheet" type="text/css" href="/styles/scss/bootstrap.scss">
+    <link rel="stylesheet" type="text/css" href="/styles/dist/css/bootstrap.min.css">
     <title>Бренды</title>
 </head>
 <body>
@@ -16,100 +16,108 @@ function closeForm() {
 document.getElementById("myForm").style.display = "none";
 }
 </script>
-<div class="container-fluid" style="width: 50%;">
-    <div class="row tableRow tableHeaderRow"> <!-- Заголовок -->
-        <div class="col-sm-1 tableVerticalLineRight">
-            <a href="../index">Главная страница</a>
-        </div>
-        <div class="col-sm tableVerticalLineRight">
-            <a href="../cars">Автомобили</a>
-        </div>
-        <div class="col-sm tableVerticalLineRight">
-            <a href="../orders">Заказы</a>
-        </div>
-        <div class="col-sm-1 tableVerticalLineRight">
-            <a href="../clients">Клиенты</a>
-        </div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-1"></div>
-   </div>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="/index">Главная страница</a> <!-- активная ссылка -->
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/brands">Бренды</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/clients">Клиенты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/cars">Автомобили</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/orders">Заказы</a>
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col" style="width: 100%; text-align: right; margin-right:20px;">
+        <h3><a href="/index">Автосалон</a></h3>
+        <p><img src="/styles/1639223273_56-papik-pro-p-mashinka-klipart-57.png" width="50" alt="">Сайт автосалона </p>
+    </div>
 </div>
-<p>Бренды</p>
-<div class="container-fluid" style="width: 75%;">
+<h1 align="center"> Бренды</h1>
+<p></p>
+
+<div class="container-fluid" style="width: 100%; text-align: left;">
     <div class="row">
         <div class="col-sm" style="text-align: left;">
-            <p></p>
-        </div>
-        <div class="col-sm" style="text-align: left;">
-            <form method="get" action="/brands">
+            <label for="newBrand">Введите название нового бренда:</label>
+            <form method="post" action="/brands/add" id="newBrand">
                 <input name="name" type="text">
-                <button type="submit" id="findBrands">Поиск</button>
+                <button type="submit" class="btn btn-warning" id="addNewBrand">Добавить</button>
             </form>
         </div>
     </div>
 </div>
-
-<div class="container-fluid" style="width: 75%;">
-    <div class="row">
-        <div class="col-sm" style="text-align: left;">
-            <p>Введите название нового бренда:</p>
-            <p></p>
-        </div>
-        <div class="col-sm" style="text-align: left;">
-            <form method="post" action="/brands/add">
-                <input name="name" type="text">
-                <button type="submit" id="addNewBrand">Добавить</button>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-<div class="container-fluid" style="width: 75%;">
+<p></p>
+    <p></p>
+<div class="container-fluid" style="width: 100%; text-align: right;">
     <div class="row">
         <div class="col-sm" style="text-align: left;">
             <p>Измените название бренда:</p>
-        </div>
-        <div class="col-sm" style="text-align: left;">
-            <button class="open-button" onclick="openForm()">Изменить</button>
-            <div class="form-popup" id="myForm">
-                <form method="post" action="/brands/edit" class="form-container">
+            <button class="open-button" onclick="openForm()" id="changebrand">Изменить</button>
+            <div class="form-popup" id="myForm" style="text-align: left;">
+                <form method="post" action="/brands/edit" class="form-container" >
                     <input type="text" placeholder="Старое название" name="oldName" required>
                     <input type="text" placeholder="Новое название" name="newName" required>
-                    <button type="submit" class="btn">Сохранить</button>
-                    <button type="button" class="btn cancel" onclick="closeForm()">Закрыть</button>
+                    <button type="submit" class="btn" id="save">Сохранить</button>
+                    <button type="button" id="cancelButton" class="btn cancel" onclick="closeForm()">Закрыть</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<p></p>
+<p></p>
 
-<div class="container-fluid" style="width: 50%;">
+<div class="row">
+        <div class="col-sm" style="text-align: center;">
+            <form method="get" action="/brands">
+                <input name="name" type="text" id="findName">
+                <button type="submit" id="findBrands">Поиск</button>
+            </form>
+        </div>
+</div>
+<p></p>
+<table class="table table-hover" style="width: 100%; text-align: center">
+    <thead>
+    <tr>
+        <th>Бренд</th>
+        <th>Посмотреть модели бренда</th>
+        <th>Посмотреть автомобили бренда</th>
+        <th>Удалить бренд</th>
+    </tr>
+    </thead>
     <div th:each="brand : ${brandsList}">
-        <div class="row tableRow">
-            <div class="col-sm">
+        <tr class="tableBrangs">
+            <td>
                 <p th:text="${brand.name}" class="tableText"></p>
-            </div>
-            <div class="col-sm tableButtonBlock" style="text-align: right;">
-                <form method="post" action="/brands/delete" class="inlineForm">
-                    <input type="hidden" name="id" th:value="${brand.id}">
-                    <button type="submit" class="internalButton deleteButton">Удалить из базы</button>
-                </form>
-            </div>
-            <div class="col-sm tableButtonBlock" style="text-align: right;">
+            </td>
+            <td>
                 <form method="get" action="/models" class="inlineForm">
                     <input type="hidden" name="brandName" th:value="${brand.name}">
-                    <button type="submit" class="internalButton deleteButton">Модели</button>
+                    <button type="submit" id="modelsbutton" th:inline="text" class="btn">Модели [[${brand.name}]]</button>
                 </form>
-            </div>
-            <div class="col-sm tableButtonBlock" style="text-align: right;">
-                <a th:href="@{/brands/car/{id}(id=${brand.id})}">
-                    <button class="internalButton" id="carButton">Автомобили</button>
-                </a>
-            </div>
-        </div>
+            </td>
+            <td>
+                <form method="get" action="/cars" class="inlineForm">
+                    <input type="hidden" name="brand" th:value="${brand.name}">
+                    <button type="submit" id="carsbutton" th:inline="text" class="btn">Автомобили [[${brand.name}]]</button>
+                </form>
+            </td>
+            <td>
+                <form method="post" action="/brands/delete" class="inlineForm">
+                    <input type="hidden" name="id" th:value="${brand.id}">
+                    <button type="submit" id="deleteButton" class="btn btn-danger">Удалить из базы</button>
+                </form>
+            </td>
+        </tr>
     </div>
-    <div class="row tableRow"></div>
-</div>
+</table>
 </body>
 </html>

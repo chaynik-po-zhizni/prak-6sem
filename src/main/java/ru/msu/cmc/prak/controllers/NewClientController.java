@@ -37,19 +37,23 @@ public class NewClientController {
         if (email != null && email.isEmpty()) {
             email = null;
         }
-        List<Client> clients = clientDAO.getByFilter(new ClientDAO.Filter(phone, null, null));
-        System.out.println(clients);
-        if (clients != null
-                && !clients.isEmpty()
-                && clients.get(0) != null) {
-            int id = clients.get(0).getId();
-            System.out.println(id);
-            return  "redirect:../client?id=" + id;
+        Client client = getClient(phone, clientDAO);
+        if (client != null) {
+            return  "redirect:../client?id=" + client.getId();
         }
-        Client client = new Client(null, email, address, name, phone);
+        client = new Client(null, email, address, name, phone);
         clientDAO.save(client);
         int id = client.getId();
 
         return  "redirect:../client?id=" + id;
+    }
+
+    static Client getClient(@RequestParam Long phone, ClientDAO clientDAO) {
+        List<Client> clients = clientDAO.getByFilter(new ClientDAO.Filter(phone, null, null));
+        if (clients != null
+                && !clients.isEmpty()) {
+            return clients.get(0);
+        }
+        return null;
     }
 }

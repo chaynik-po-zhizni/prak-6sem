@@ -69,11 +69,16 @@ public class BrandController {
     }
 
     @PostMapping(value = "/brands/edit")
-    public String postBrandsEdit(@RequestParam String oldName,
+    public String postBrandsEdit(@NonNull Model model,
+                                 @RequestParam String oldName,
                                  @RequestParam String newName) {
         Brand brand = brandDAO.getBrandByName(oldName);
         if (brand == null) {
             return "redirect:../brands";
+        }
+        Brand brand1 = brandDAO.getBrandByName(newName);
+        if (brand1 != null && !brand1.equals(brand)) {
+            return ChangeController.getError(model, 0, newName, oldName, null);
         }
         if (newName != null)
             if (!newName.isEmpty()) {

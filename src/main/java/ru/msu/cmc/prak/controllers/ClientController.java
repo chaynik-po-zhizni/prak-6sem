@@ -38,11 +38,16 @@ public class ClientController {
     }
 
     @PostMapping(value = "/client/edit")
-    public String postClientsEdit(@RequestParam(required = false) String name,
-                                 @RequestParam(required = false) String email,
-                                 @RequestParam(required = false) Long phone,
-                                 @RequestParam(required = false) String address,
-                                 @RequestParam int id) {
+    public String postClientsEdit(@NonNull Model model,
+                                  @RequestParam(required = false) String name,
+                                  @RequestParam(required = false) String email,
+                                  @RequestParam(required = false) String phoneString,
+                                  @RequestParam(required = false) String address,
+                                  @RequestParam int id) {
+        Long phone = null;
+        if (phoneString != null) {
+            phone = Long.valueOf(phoneString);
+        }
         if (name != null && name.isEmpty()) {
             name = null;
         }
@@ -50,6 +55,12 @@ public class ClientController {
             email = null;
         }
         Client client = clientDAO.getEntityById(id);
+        Client client1 = NewClientController.getClient(phone, clientDAO);
+        if (client1 != null && !client1.equals(client)) {
+            String oldPhone = String.valueOf(client.getPhone());
+            String newPhone = phone.toString();
+            return ChangeController.getError(model, 2, newPhone, oldPhone, null);
+        }
         if (name != null) {
             client.setFullName(name);
         }

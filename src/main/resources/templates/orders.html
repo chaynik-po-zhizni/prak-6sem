@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/styles/Styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/bootstrap-select-1.13.14/dist/css/bootstrap-select.min.css">
+    <title>Заказы</title>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="/index">Главная страница</a> <!-- активная ссылка -->
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/brands">Бренды</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/clients">Клиенты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/cars">Автомобили</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/orders">Заказы</a>
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col" style="width: 100%; text-align: right; margin-right:20px;">
+        <h3><a href="/index">Автосалон</a></h3>
+        <p><img src="/styles/1639223273_56-papik-pro-p-mashinka-klipart-57.png" width="50" alt="">Сайт автосалона </p>
+    </div>
+</div>
+<h1 align="center">Заказы</h1>
+<p></p>
+
+
+<div class="container-fluid" style="width: 100%; text-align: center;">
+    <div class="row">
+        <div class="col-sm" style="text-align: left;">
+            <form method="get" action="/orders">
+                <fieldset class="form-elem">
+                    <select name="status" id="status-select">
+                        <option value="" selected disabled hidden>Статус заказа</option>
+                        <option value="" >-- Выберите статус заказа --</option>
+                        <option value="issued">Создан</option>
+                        <option value="in_progress">В процессе</option>
+                        <option value="done">Готов</option>
+                        <option value="canceled">Отменен</option>
+                    </select>
+                </fieldset>
+                <fieldset class="form-elem">
+                    <select name="testDrive" id="test_drive-select">
+                        <option value="" selected disabled hidden>Тест драйв</option>
+                        <option value="" >-- Выберите присутствует ли тест драйв--</option>
+                        <option value="true">Да</option>
+                        <option value="false">Нет</option>
+                    </select>
+                </fieldset>
+                <fieldset class="form-elem">
+                    <input type="tel" placeholder="Номер телефона клиента" name="phone" pattern="[0-9]{10}">
+                </fieldset>
+                <fieldset class="form-elem">
+                    <input type="text" placeholder="Номер заказа" name="id">
+                </fieldset>
+                <fieldset class="form-elem">
+                    <p>Дата и время</p>
+                    <p>
+                    <label for="localdateFrom">От </label>
+                    <input type="datetime-local" id="localdateFrom" name="dateFrom"/>
+                    </p>
+                    <p>
+                    <label for="localdateTo">До </label>
+                    <input type="datetime-local" id="localdateTo" name="dateTo"/>
+                    </p>
+                </fieldset>
+                <p></p>
+                <button type="submit" id="findOrders">Поиск</button>
+            </form>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+<table class="table table-hover" style="width: 100%; text-align: center">
+    <thead>
+    <tr>
+        <th>Марка</th>
+        <th>Модель</th>
+        <th>ФИО клиента</th>
+        <th>Телефон клиента</th>
+        <th>Номер</th>
+        <th>Статус</th>
+        <th>Дата создания</th>
+        <th>Нужен ли тест драйв</th>
+        <th>Подробная информация</th>
+    </tr>
+    </thead>
+    <div th:each="order : ${orderList}">
+        <tr class="orderShow">
+            <td>
+                <p th:if="${order.car.model==null}" class="tableText">-</p>
+                <p th:text="${order.car.model.brand.name}" class="tableText" id="brandShow"></p>
+            </td>
+            <td>
+                <p th:if="${order.car.model==null}" class="tableText">-</p>
+                <p th:text="${order.car.model.name}" class="tableText" id="modelShow"></p>
+            </td>
+            <td>
+                <p th:text="${order.client.fullName}" class="tableText" id="nameShow"></p>
+            </td>
+            <td>
+                <p th:text="${order.client.getStringPhone()}" class="tableText" id="phoneShow"></p>
+            </td>
+            <td>
+                <p th:text="${order.id}" class="tableText" id="idShow"></p>
+            </td>
+            <td>
+                <p th:text="${order.status.getReadName()}" class="tableText" id="statusShow"></p>
+            </td>
+            <td>
+                <p th:text="${order.date.toString()}" class="tableText" id="dateShow"></p>
+            </td>
+            <td>
+                <p th:if="${order.test_drive}" class="tableText" id="driveShow">&#10004;</p>
+            </td>
+            <td>
+                 <a th:href="@{/order(id=${order.id})}">
+                     <button class="internalButton" id="infoButton">Информация</button>
+                 </a>
+            </td>
+        </tr>
+    </div>
+</table>
+</body>
+</html>

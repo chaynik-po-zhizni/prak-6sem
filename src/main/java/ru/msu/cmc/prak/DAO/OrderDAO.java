@@ -23,4 +23,5 @@ public interface OrderDAO extends CommonDAO <Order>{
     }
 
     List<Order> getByFilter(Filter filter);
+    public Order carOrdered(int id);
 }

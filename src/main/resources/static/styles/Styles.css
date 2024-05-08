@@ -1,17 +1,39 @@
+.body { padding-top: 70px; }
+.select {
+    width: 50px;
+}
+.red {
+    background-color: #dc3545;
+}
+.blue {
+    background-color:  #0dcaf0;
+}
+.yellow {
+    background-color:  #ffc107;
+}
+.resized {
+    width: 100%;
+    height: 40px;
+}
+.select option {
+    width: 50px;
+}
 .open-button {
     position: relative;
-    bottom: 22px;
-    right: 26px;
-    width: 290px;
+    bottom: 20px;
+    right: 0;
+    left: 0;
+    width: 280px;
 }
 .form-popup {
     display: none;
     position: relative;
     bottom: 0;
-    right: 14px;
+    left: 0;
+    right: 0;
 }
 .form-container {
-
+    position: relative;
     max-width: 320px;
 
 }
@@ -47,11 +69,14 @@
 .tableRow {
     border-top: 1px solid black;
 }
+.gray {
+    background-color: rgb(128, 128, 128);
+}
 .tableHeaderRow {
     border-bottom: 1px solid black;
     font-size: 125%;
 }
-.tableButtonBlock { /* обычно не нужен, но если кнопки отказываются растягиваться, то помогает */
+.tableButtonBlock {
     display: flex;
     flex-direction: column;
     justify-content: center;
